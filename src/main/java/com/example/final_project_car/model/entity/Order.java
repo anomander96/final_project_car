@@ -2,27 +2,27 @@ package com.example.final_project_car.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Order implements Serializable {
     private static final long serialVersionUID = -3376794396716197066L;
-    private int id;
+    private int orderId;
     private int userId;
     private int carId;
     private int orderStatusId;
-    private LocalDateTime createDate;
+    private Date createDate;
     private boolean withDriver;
     private Time rentDuration;
     private BigDecimal totalPrice;
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getUserId() {
@@ -49,11 +49,11 @@ public class Order implements Serializable {
         this.orderStatusId = orderStatusId;
     }
 
-    public LocalDateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -82,16 +82,13 @@ public class Order implements Serializable {
     }
 
     // варто подумати над сутністю order_status, або додати поле в таблицю orders, або подумати інший спосіб
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id &&
+        return orderId == order.orderId &&
                 userId == order.userId &&
                 carId == order.carId &&
                 orderStatusId == order.orderStatusId &&
@@ -103,13 +100,13 @@ public class Order implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, carId, orderStatusId, createDate, withDriver, rentDuration, totalPrice);
+        return Objects.hash(orderId, userId, carId, orderStatusId, createDate, withDriver, rentDuration, totalPrice);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
+                "orderId=" + orderId +
                 ", userId=" + userId +
                 ", carId=" + carId +
                 ", orderStatusId=" + orderStatusId +

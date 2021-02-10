@@ -1,6 +1,10 @@
-package com.example.final_project_car.model.dao.mysql;
+package com.example.final_project_car.model.dao.factory;
 
 import com.example.final_project_car.model.dao.*;
+import com.example.final_project_car.model.dao.impl.AccidentDAOMySql;
+import com.example.final_project_car.model.dao.impl.CarDAOMySql;
+import com.example.final_project_car.model.dao.impl.OrderDAOMySql;
+import com.example.final_project_car.model.dao.impl.UserDAOMySql;
 
 public class MySqlDAOFactory extends DAOFactory {
     private static MySqlDAOFactory instance;
@@ -13,21 +17,21 @@ public class MySqlDAOFactory extends DAOFactory {
 
     @Override
     public AccidentDAO getAccidentDAO() {
-        return MySqlAccidentDAO.getInstance();
+        return AccidentDAOMySql.getInstance();
     }
 
     @Override
     public CarDAO getCarDAO() {
-        return MySqlCarDAO.getInstance();
+        return CarDAOMySql.getInstance();
     }
 
     @Override
     public OrderDAO getOrderDAO() {
-        return MySqlOrderDAO.getInstance();
+        return OrderDAOMySql.getInstance();
     }
 
     @Override
     public UserDAO getUserDAO() {
-        return MySqlUserDAO.getInstance();
+        return UserDAOMySql.getInstance();
     }
 }

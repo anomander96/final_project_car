@@ -2,39 +2,49 @@ package com.example.final_project_car.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
+import java.sql.Date;
 import java.util.Objects;
 
 public class Accident implements Serializable {
     private static final long serialVersionUID = 8449758699895284831L;
-    private int id;
-    private int ordersId;
-    private LocalDateTime date;
+    private int accidentId;
+    private int accidentCategoryId;
+    private int orderId;
+    private Date accidentDate;
     private String description;
     private BigDecimal costPerDamage;
 
-    public int getId() {
-        return id;
+    public int getAccidentId() {
+        return accidentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAccidentId(int id) {
+        this.accidentId = id;
     }
 
-    public int getOrdersId() {
-        return ordersId;
+    public int getAccidentCategoryId() {
+        return accidentCategoryId;
     }
 
-    public void setOrdersId(int ordersId) {
-        this.ordersId = ordersId;
+    public void setAccidentCategoryId(int accidentCategoryId) {
+        this.accidentCategoryId = accidentCategoryId;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setOrderId(int ordersId) {
+        this.orderId = ordersId;
+    }
+
+    public Date getAccidentDate() {
+        return accidentDate;
+    }
+
+    public void setAccidentDate(Date accidentDate) {
+        this.accidentDate = accidentDate;
     }
 
     public String getDescription() {
@@ -55,45 +65,35 @@ public class Accident implements Serializable {
 
 
     // варто подумати над сутністю accident_category, або додати поле в таблицю accident, або подумати інший спосіб
+
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Accident accident = (Accident) o;
-        return id == accident.id &&
-                ordersId == accident.ordersId &&
-                Objects.equals(date, accident.date) &&
+        return accidentId == accident.accidentId &&
+                accidentCategoryId == accident.accidentCategoryId &&
+                orderId == accident.orderId &&
+                Objects.equals(accidentDate, accident.accidentDate) &&
                 Objects.equals(description, accident.description) &&
                 Objects.equals(costPerDamage, accident.costPerDamage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ordersId, date, description, costPerDamage);
+        return Objects.hash(accidentId, accidentCategoryId, orderId, accidentDate, description, costPerDamage);
     }
 
     @Override
     public String toString() {
         return "Accident{" +
-                "id=" + id +
-                ", ordersId=" + ordersId +
-                ", date=" + date +
+                "accidentId=" + accidentId +
+                ", accidentCategoryId=" + accidentCategoryId +
+                ", orderId=" + orderId +
+                ", accidentDate=" + accidentDate +
                 ", description='" + description + '\'' +
                 ", costPerDamage=" + costPerDamage +
                 '}';
-//        StringBuilder sb = new StringBuilder("Accident{");
-//        sb.append("id=").append(id).
-//                append(", ordersId=").append(ordersId).
-//                append(", date=").append(date).
-//                append(System.lineSeparator()).
-//                append(", description=").append(description).
-//                append(System.lineSeparator()).
-//                append(", costPerDamage").append(costPerDamage).
-//                append('}');
-//        return sb.toString();
     }
 }

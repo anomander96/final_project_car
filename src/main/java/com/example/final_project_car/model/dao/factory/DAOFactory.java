@@ -1,6 +1,9 @@
-package com.example.final_project_car.model.dao;
+package com.example.final_project_car.model.dao.factory;
 
-import com.example.final_project_car.model.dao.mysql.MySqlDAOFactory;
+import com.example.final_project_car.model.dao.AccidentDAO;
+import com.example.final_project_car.model.dao.CarDAO;
+import com.example.final_project_car.model.dao.OrderDAO;
+import com.example.final_project_car.model.dao.UserDAO;
 
 public abstract class DAOFactory {
     public static final int MYSQL = 1;
@@ -12,7 +15,7 @@ public abstract class DAOFactory {
 
     public abstract CarDAO getCarDAO();
 
-    public abstract  OrderDAO getOrderDAO();
+    public abstract OrderDAO getOrderDAO();
 
     public abstract UserDAO getUserDAO();
 

@@ -6,19 +6,19 @@ import java.util.Objects;
 
 public class Car implements Serializable {
     private static final long serialVersionUID = 8872568352484813771L;
-    private int id;
+    private int carId;
     private int carCategoryId;
     private String brandName;
     private String modelName;
     private String color;
     private BigDecimal price;
 
-    public int getId() {
-        return id;
+    public int getCarId() {
+        return carId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCarId(int id) {
+        this.carId = id;
     }
 
     public int getCarCategoryId() {
@@ -62,16 +62,13 @@ public class Car implements Serializable {
     }
 
     // варто подумати над сутністю car_category, або додати поле в таблицю car, або подумати інший спосіб
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return id == car.id &&
+        return carId == car.carId &&
                 carCategoryId == car.carCategoryId &&
                 Objects.equals(brandName, car.brandName) &&
                 Objects.equals(modelName, car.modelName) &&
@@ -81,26 +78,18 @@ public class Car implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, carCategoryId, brandName, modelName, color, price);
+        return Objects.hash(carId, carCategoryId, brandName, modelName, color, price);
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + id +
+                "carId=" + carId +
                 ", carCategoryId=" + carCategoryId +
                 ", brandName='" + brandName + '\'' +
                 ", modelName='" + modelName + '\'' +
                 ", color='" + color + '\'' +
                 ", price=" + price +
                 '}';
-//        StringBuilder sb = new StringBuilder("Car{");
-//        sb.append("id=").append(id).
-//                append(", carCategoryId=").append(carCategoryId).
-//                append(", brandName=").append(brandName).
-//                append(", modelName=").append(modelName).
-//                append(", color=").append(color).
-//                append(", price=").append(price).append('}');
-//        return sb.toString();
     }
 }

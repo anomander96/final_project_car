@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 8897246935493420277L;
-    private int id;
+    private int userId;
     private int userRoleId;
     private String firstName;
     private String lastName;
@@ -16,12 +16,12 @@ public class User implements Serializable {
     private String passport;
     private boolean isBlocked;
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getUserRoleId() {
@@ -97,12 +97,13 @@ public class User implements Serializable {
     }
 
     // варто подумати над сутністю user_role, або додати поле в таблицю user, або подумати інший спосіб
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
+        return userId == user.userId &&
                 userRoleId == user.userRoleId &&
                 isBlocked == user.isBlocked &&
                 Objects.equals(firstName, user.firstName) &&
@@ -116,13 +117,14 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userRoleId, firstName, lastName, login, password, email, phone, passport, isBlocked);
+        return Objects.hash(userId, userRoleId, firstName,
+                lastName, login, password, email, phone, passport, isBlocked);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", userRoleId=" + userRoleId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
