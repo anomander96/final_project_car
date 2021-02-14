@@ -18,11 +18,13 @@ public class AccidentDAOMySql implements AccidentDAO {
 
     private static final String SELECT_ALL_ACCIDENTS = "SELECT * FROM accident";
     private static final String SELECT_ACCIDENT_BY_ID = "SELECT * FROM accident WHERE accident_id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM accident WHERE accident_id = ?";
 
     public static AccidentDAOMySql getInstance() {
         if (instance == null) {
             instance = new AccidentDAOMySql();
-        } return instance;
+        }
+        return instance;
     }
 
     @Override
@@ -78,5 +80,29 @@ public class AccidentDAOMySql implements AccidentDAO {
             }
         }
         return accident;
+    }
+
+    @Override
+    public boolean delete(Integer accidentId) {
+        boolean result = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            if (accidentId != null) {
+                connection = connectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(DELETE_QUERY);
+                preparedStatement.setInt(1, accidentId);
+                preparedStatement.executeUpdate();
+                result = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Should add a Logger");
+        } finally {
+            if (connection != null) {
+                connectionPool.closeConnection(connection, preparedStatement);
+            }
+        }
+        return result;
     }
 }

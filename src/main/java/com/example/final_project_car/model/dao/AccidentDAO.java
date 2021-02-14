@@ -9,4 +9,5 @@ public interface AccidentDAO {
 
     public Accident getAccidentById(int accidentId); // Should write an own exception for DAO
 
+    public boolean delete(Integer accidentId);
 }

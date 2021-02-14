@@ -23,7 +23,8 @@ public class CarDAOMySql implements CarDAO {
     public static CarDAOMySql getInstance() {
         if (instance == null) {
             instance = new CarDAOMySql();
-        } return instance;
+        }
+        return instance;
     }
 
     @Override
@@ -85,20 +86,19 @@ public class CarDAOMySql implements CarDAO {
         boolean result = false;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         if (carId != null) {
             try {
                 connection = connectionPool.getConnection();
                 preparedStatement = connection.prepareStatement(DELETE_QUERY);
-                preparedStatement.setInt(1 , carId);
+                preparedStatement.setInt(1, carId);
                 preparedStatement.executeUpdate();
                 result = true;
             } catch (SQLException e) {
                 System.out.println("Should add a Logger");
             } finally {
                 if (connection != null) {
-                    connectionPool.closeConnection(connection, preparedStatement, resultSet);
+                    connectionPool.closeConnection(connection, preparedStatement);
                 }
             }
         }
