@@ -21,6 +21,9 @@ public class User implements Serializable {
     }
 
     public void setUserId(int userId) {
+        if (userId < 0) {
+            userId = 0;
+        }
         this.userId = userId;
     }
 

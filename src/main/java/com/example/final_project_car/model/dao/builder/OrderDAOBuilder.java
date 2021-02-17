@@ -18,7 +18,7 @@ public class OrderDAOBuilder {
         int orderStatusId = resultSet.getInt(Parameters.ORDER_STATUS_ID); // should check in work
         Date createDate = resultSet.getDate(Parameters.CREATE_DATE);
         boolean withDriver = resultSet.getBoolean(Parameters.WITH_DRIVER);
-        Time rentDuration = resultSet.getTime(Parameters.RENT_DURATION);
+        int rentDuration = resultSet.getInt(Parameters.RENT_DURATION);
         BigDecimal totalPrice = resultSet.getBigDecimal(Parameters.TOTAL_PRICE); // should calculate this parameter in DB
 
         Order order = new Order();

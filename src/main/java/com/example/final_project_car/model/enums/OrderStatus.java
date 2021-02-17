@@ -3,8 +3,9 @@ package com.example.final_project_car.model.enums;
 import com.example.final_project_car.model.entity.Order;
 
 public enum OrderStatus {
-    OPENED,
-    CONFIRMED,
+    PENDING,
+    APPROVED,
+    DECLINED,
     PAID,
     CLOSED;
 

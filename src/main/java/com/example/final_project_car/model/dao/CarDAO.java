@@ -11,6 +11,11 @@ public interface CarDAO {
 
     public boolean delete(Integer carId);
 
+    public boolean update(Car car);
+
+    public void addNewCar(Car car);
+    //public boolean add(Car car); //
+
     // should think how to do a filter by brand name
 
     // should think how to do a filter by car category

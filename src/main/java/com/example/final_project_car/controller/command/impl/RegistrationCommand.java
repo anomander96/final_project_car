@@ -18,7 +18,7 @@ public class RegistrationCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String page = PageName.SIGN_UP_PAGE;
         User user = null;
-
+        HttpSession httpSession = request.getSession();
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         String login = request.getParameter("login");
@@ -42,8 +42,10 @@ public class RegistrationCommand extends Command {
         }
 
         if (user != null) {
-            HttpSession httpSession = request.getSession();
             int id = user.getUserId();
+            httpSession.setAttribute("user_id", id);
+//            httpSession.setAttribute("user", user);
+            //page = PageName.MENU_LIST_PAGE;
             page = PageName.MENU_LIST_PAGE;
         }
         return page;

@@ -38,8 +38,12 @@ public class LoginCommand extends Command {
 
         if (user != null) {
             HttpSession session = request.getSession();
+            request.setAttribute("user", user);
             user = userService.getUserByLogin(login);
-            session.setAttribute("user", user);
+            int id = user.getUserId();
+            session.setAttribute("user_id", id);
+//            session.setAttribute("user", user);
+            //page = PageName.MENU_LIST_PAGE;
             page = PageName.MENU_LIST_PAGE;
         }
 //        else if (user == null){

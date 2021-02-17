@@ -33,9 +33,10 @@
     </head>
     <body>
         <ul>
-            <li><a href="#My profile">My profile</a></li>
+            <li><a href="controller?command=user_profile">My profile</a></li>
             <li><a href="controller?command=login">Login</a></li>
             <li><a href ="controller?command=registration">Sign up</a></li>
+            <li><a href="controller?command=logout">Logout</a></li>
         </ul>
     </body>
 </html>

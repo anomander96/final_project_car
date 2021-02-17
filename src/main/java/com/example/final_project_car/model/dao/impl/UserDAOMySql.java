@@ -232,8 +232,8 @@ public class UserDAOMySql implements UserDAO {
 //    public static void main(String[] args) {
 //
 //
-//        //User user = new User("andrew", "roman");
-//        //User user = user.createUser("roman", "borin", "borabora", "qwerty","borin@gmail.com", "444", "3434");
+//        User user = new User();
+//        user = user.createUser("roman", "borin", "borabora", "qwerty","borin@gmail.com", "444", "3434");
 //        UserDAOMySql userDAOMySql = new UserDAOMySql();
 //        User user = userDAOMySql.getUserByLogin("hello");
 //        System.out.println(user.toString());

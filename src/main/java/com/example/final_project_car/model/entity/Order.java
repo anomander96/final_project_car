@@ -14,7 +14,7 @@ public class Order implements Serializable {
     private int orderStatusId;
     private Date createDate;
     private boolean withDriver;
-    private Time rentDuration;
+    private int rentDuration; // як варіант замінити на простий інт rentHours, тоді можна буде порахувати
     private BigDecimal totalPrice;
 
     public int getOrderId() {
@@ -65,11 +65,11 @@ public class Order implements Serializable {
         this.withDriver = withDriver;
     }
 
-    public Time getRentDuration() {
+    public int getRentDuration() {
         return rentDuration;
     }
 
-    public void setRentDuration(Time rentDuration) {
+    public void setRentDuration(int rentDuration) {
         this.rentDuration = rentDuration;
     }
 
@@ -83,6 +83,7 @@ public class Order implements Serializable {
 
     // варто подумати над сутністю order_status, або додати поле в таблицю orders, або подумати інший спосіб
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,14 +94,15 @@ public class Order implements Serializable {
                 carId == order.carId &&
                 orderStatusId == order.orderStatusId &&
                 withDriver == order.withDriver &&
+                rentDuration == order.rentDuration &&
                 Objects.equals(createDate, order.createDate) &&
-                Objects.equals(rentDuration, order.rentDuration) &&
                 Objects.equals(totalPrice, order.totalPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, userId, carId, orderStatusId, createDate, withDriver, rentDuration, totalPrice);
+        return Objects.hash(orderId, userId, carId,
+                orderStatusId, createDate, withDriver, rentDuration, totalPrice);
     }
 
     @Override

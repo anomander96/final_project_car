@@ -3,8 +3,6 @@ package com.example.final_project_car.service;
 import com.example.final_project_car.model.dao.UserDAO;
 import com.example.final_project_car.model.dao.impl.UserDAOMySql;
 import com.example.final_project_car.model.entity.User;
-import com.example.final_project_car.service.builder.UserServiceBuilder;
-
 import java.util.List;
 
 public class UserService {
@@ -111,7 +109,7 @@ public class UserService {
     private User buildUser(String firstName, String lastName, String login,
                       String password, String email, String phone, String passport) {
         User user = new User();
-        user.setUserRoleId(2);
+        user.setUserRoleId(1);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setLogin(login);
@@ -126,7 +124,7 @@ public class UserService {
         UserDAOMySql userDAOMySql = new UserDAOMySql();
         UserService userService = new UserService();
         User user = new User();
-        userService.createUser("user2", "uziko", "hellich", "passik", "user2@gmail.com", "12345", "KC14555");
+        userService.createUser("Andrew", "Roman", "andrew", "secret", "andrewroman@gmail.com", "123456", "KC1664555");
         System.out.println(user.toString());
     }
 }

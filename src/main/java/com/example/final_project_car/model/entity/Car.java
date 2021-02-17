@@ -1,5 +1,7 @@
 package com.example.final_project_car.model.entity;
 
+import com.example.final_project_car.model.enums.CarCategory;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -62,6 +64,10 @@ public class Car implements Serializable {
     }
 
     // варто подумати над сутністю car_category, або додати поле в таблицю car, або подумати інший спосіб
+
+    private String getCategory(Car car) {
+        return CarCategory.getCarCategory(car).getName();
+    }
 
     @Override
     public boolean equals(Object o) {
