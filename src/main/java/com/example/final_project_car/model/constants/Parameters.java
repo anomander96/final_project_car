@@ -35,6 +35,8 @@ public class Parameters {
 
     public static final String ORDER_STATUS_NAME = "order_status_name";
 
+    public static final String RENT_HOURS = "rent_hours";
+
     // User entity
     public static final String USER_ID = "user_id";
     public static final String USER_ROLE_ID = "user_role_id";

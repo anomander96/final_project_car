@@ -3,6 +3,8 @@ package com.example.final_project_car.service;
 import com.example.final_project_car.model.dao.UserDAO;
 import com.example.final_project_car.model.dao.impl.UserDAOMySql;
 import com.example.final_project_car.model.entity.User;
+import com.example.final_project_car.service.builder.UserServiceBuilder;
+
 import java.util.List;
 
 public class UserService {
@@ -55,10 +57,24 @@ public class UserService {
         // here we need to add a validators for login and password and passport mb
 
         try {
-            User newUser = buildUser(firstName, lastName, login, password, email, phone, passport);
+            UserServiceBuilder builder = new UserServiceBuilder();
+            User newUser = builder.build(firstName, lastName, login, password, email, phone, passport);
+            newUser.setUserRoleId(1);
             userDAO.addNewUser(newUser);
         } catch (Exception e) {
-            //add a logger
+            //add a logger and a custom Exception
+        }
+    }
+
+    public void createAdmin(String firstName, String lastName, String login,
+                            String password, String email, String phone, String passport) {
+        try {
+            UserServiceBuilder builder = new UserServiceBuilder();
+            User newAdmin = builder.build(firstName, lastName, login, password, email, phone, passport);
+            newAdmin.setUserRoleId(2);
+            userDAO.addNewUser(newAdmin);
+        } catch (Exception e) {
+            // add a Logger and a custom Exception
         }
     }
 
@@ -124,7 +140,7 @@ public class UserService {
         UserDAOMySql userDAOMySql = new UserDAOMySql();
         UserService userService = new UserService();
         User user = new User();
-        userService.createUser("Andrew", "Roman", "andrew", "secret", "andrewroman@gmail.com", "123456", "KC1664555");
+        userService.createAdmin("Admin", "Admin", "admin1", "admin1", "admin1@mail.com", "000000", "000000");
         System.out.println(user.toString());
     }
 }

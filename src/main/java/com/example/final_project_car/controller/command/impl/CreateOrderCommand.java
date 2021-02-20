@@ -9,13 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class OrdersUserList extends Command {
-    private static final long serialVersionUID = 1729304145778520834L;
+public class CreateOrderCommand extends Command {
+    private static final long serialVersionUID = -4122067013181622174L;
     private final OrderService orderService = new OrderService();
 
     @Override
@@ -23,27 +20,27 @@ public class OrdersUserList extends Command {
         String page = null;
         HttpSession session = request.getSession();
         int userId = (int) session.getAttribute("user_id");
-
         int carId = Integer.parseInt(request.getParameter("carId"));
-        int rentHours = Integer.parseInt(request.getParameter("rentHours"));
-//        String time = request.getParameter("rentDuration");
-//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//        long ms = 0;
-//        try {
-//            ms = formatter.parse(time).getTime();
-//        } catch (Exception e) {
-//            // add a Logger and a custom exception
-//        }
-//        Time rentDuration = new Time(ms);
-        boolean withDriver = false;
-        try {
-            orderService.createOrderByUser(userId, carId, withDriver, rentHours);
-        } catch (Exception e) {
-            // add a Logger and a custom Exception
+        int rentDuration = Integer.parseInt(request.getParameter("rentDuration"));
+//
+        // add a Logger and a custom exception or message
+        if (request.getParameter("withDriver").equals("true")) {
+            try {
+                orderService.createOrderByUser(userId, carId, true, rentDuration);
+            } catch (Exception e) {
+                // add a Logger and a custom exception or forward to the error message page
+            }
+        } else {
+            try {
+                orderService.createOrderByUser(userId, carId, false, rentDuration);
+            } catch (Exception e) {
+                // add a Logger and a custom exception or forward to the error message page
+            }
         }
 
-        List<Order> orders = null;
 
+
+        List<Order> orders = null;
         try {
             orders = orderService.getOrdersByUserId(userId);
         } catch (Exception e) {
@@ -51,6 +48,7 @@ public class OrdersUserList extends Command {
         }
 
         request.setAttribute("orders", orders);
-        return page = PageName.USER_ORDERS;
+        page = PageName.USER_ORDERS;
+        return page;
     }
 }

@@ -11,5 +11,8 @@ public class PageName {
     public static final String MAIN_PAGE = "/WEB-INF/jsp/main.jsp";
     public static final String CAR_INFO = "/WEB-INF/jsp/car_info.jsp";
     public static final String CREATE_ORDER = "/WEB-INF/jsp/create_order.jsp";
-    public static final String USER_ORDERS = "/WEB-INF/jsp/user_orders.jsp";
+    public static final String USER_ORDERS = "/WEB-INF/jsp/user_orders_list.jsp";
+    public static final String ADMIN_PANEL = "/WEB-INF/jsp/admin_panel.jsp";
+    public static final String ADMIN_CREATION = "/WEB-INF/jsp/admin_creation.jsp";
+    public static final String CREATE_CAR = "WEB-INF/jsp/create_car.jsp";
 }

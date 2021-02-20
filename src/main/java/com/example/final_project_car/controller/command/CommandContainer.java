@@ -21,6 +21,19 @@ public class CommandContainer {
 
         commandsContainer.put("user_orders", new OrdersUserList());
 
+        commandsContainer.put("go_to_create_admin", new GoToCreateAdminPage());
+        commandsContainer.put("create_admin", new CreateAdmin());
+
+        commandsContainer.put("go_to_create_car", new GoToCreateCarPage());
+        commandsContainer.put("create_car", new CreateCarCommand());
+
+        commandsContainer.put("create_order", new CreateOrderCommand());
+        commandsContainer.put("go_to_user_orders", new GoToUserOrdersPage());
+
+        commandsContainer.put("go_to_home_page", new GoToHomePage());
+
+
+
         // команда для офорлмення замовлення
         // команда для зміни пароля
         //

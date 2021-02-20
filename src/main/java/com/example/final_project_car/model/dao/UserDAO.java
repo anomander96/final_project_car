@@ -20,4 +20,6 @@ public interface UserDAO {
     public void unblockUser(int userId);
 
     public void addNewUser(User user);
+
+//    public void addAdmin(User user);
 }

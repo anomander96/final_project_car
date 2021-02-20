@@ -64,16 +64,34 @@ public class CarService {
         }
     }
 
-    public static void main(String[] args) {
+    public List<Car> findCarsForPagination(int currentPage, int numberOfRecords) {
+        List<Car> cars = null;
+        try {
+            cars = carDao.findCars(currentPage, numberOfRecords);
+        } catch (Exception e) {
+            // add a Logger and a custom exception
+        } return cars;
+    }
 
-        //carService.createCar("1", "Volvo", "XS90", "white", 90);
-//        CarServiceBuilder builder = new CarServiceBuilder();
-//        Car car = builder.build("1", "Volvo", "CSI", "black", 22);
-//        CarService carService = new CarService();
-//        carService.updateCar(car);
+    public Integer getNumberOfRows() {
+        Integer numberOfRows = 0;
+        try {
+            numberOfRows = carDao.getNumberOfRows();
+        } catch (Exception e) {
+            // add a Logger and a custom Exception
+        } return numberOfRows;
+    }
+
+//    public static void main(String[] args) {
+//
+//        //carService.createCar("1", "Volvo", "XS90", "white", 90);
+////        CarServiceBuilder builder = new CarServiceBuilder();
+////        Car car = builder.build("1", "Volvo", "CSI", "black", 22);
+////        CarService carService = new CarService();
+////        carService.updateCar(car);
 //        CarService carService = new CarService();
 //        CarServiceBuilder builder = new CarServiceBuilder();
 //        //Car car = builder.build("1", "Lada", "Samara", "gray", 13);
-//        carService.createCar("5", "Tesla", "Model X", "white", 27);
-    }
+//        carService.createCar("1", "Tesla", "Model X", "white", 27);
+//    }
 }

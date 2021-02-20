@@ -1,100 +1,52 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Login</title>
+        <title>Sign In</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<%--        <style>--%>
-<%--            /*@import url(https://fonts.googleapis.com/css?family=Prosto+One);*/--%>
 
-<%--            *--%>
-<%--            {--%>
-<%--                -webkit-transition: all 0.3s ease;--%>
-<%--            }--%>
-
-<%--            body--%>
-<%--            {--%>
-<%--                overflow: hidden;--%>
-<%--                margin: 0px;--%>
-<%--                padding: 0px;--%>
-<%--                font-family: 'Prosto One', cursive;--%>
-
-<%--                /*background: url('https://subtlepatterns.com/patterns/egg_shell.png');*/--%>
-<%--                /*_background: #eee;*/--%>
-<%--            }--%>
-
-<%--            #login-form--%>
-<%--            {--%>
-<%--                color: #777;--%>
-<%--                border: 0px solid #afafaf;--%>
-<%--                width: 30%;--%>
-<%--                margin-left: 35%;--%>
-<%--                margin-top: 120px;--%>
-<%--                text-align: center;--%>
-<%--                padding: 40px;--%>
-<%--                padding-top: 20px;--%>
-<%--                border-radius: 3px;--%>
-<%--                box-shadow: 0px 0px 8px #777;--%>
-<%--                background: rgba(255, 255, 255, 0.6);--%>
-<%--            }--%>
-
-<%--            input--%>
-<%--            {--%>
-<%--                color: #777;--%>
-<%--                font-weight: bold;--%>
-<%--                width: 70%;--%>
-<%--                padding: 10px;--%>
-<%--                margin: 10px;--%>
-<%--                border: 1px solid #afafaf;--%>
-<%--                border-radius: 3px;--%>
-<%--                background: rgba(255, 255, 255, 0.5);--%>
-<%--                outline: none;--%>
-<%--            }--%>
-
-<%--            input[type="button"]--%>
-<%--            {--%>
-<%--                color: white;--%>
-<%--                width: 30%;--%>
-<%--                border: 0px solid transparent;--%>
-<%--                outline: none;--%>
-<%--                cursor: pointer;--%>
-<%--            }--%>
-
-<%--            #login--%>
-<%--            {--%>
-<%--                background: #51AC74;--%>
-<%--            }--%>
-
-<%--            #register--%>
-<%--            {--%>
-<%--                background: #5C8AE6;--%>
-<%--            }--%>
-<%--        </style>--%>
+              <style>
+                  .login-form {
+                      width: 340px;
+                      margin: 50px auto;
+                  }
+                  .login-form form {
+                      margin-bottom: 15px;
+                      background: #f7f7f7;
+                      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                      padding: 30px;
+                  }
+                  .login-form h2 {
+                      margin: 0 0 15px;
+                  }
+                  .form-control, .btn {
+                      min-height: 38px;
+                      border-radius: 2px;
+                  }
+                  .btn {
+                      font-size: 15px;
+                      font-weight: bold;
+                  }
+              </style>
     </head>
 
     <body>
-<%--        <div id="login-form">--%>
-<%--            <h3>Login</h3>--%>
-<%--            <form action="controller" method="post">--%>
-<%--            <input type="text" name="login" placeholder="Login"/>--%>
-<%--            <br>--%>
-<%--            <input type="password" name="password" placeholder="Password" />--%>
-<%--            <br>--%>
-<%--            <input type="submit" name="command" id="login" value="login" />--%>
-<%--            </form>--%>
-<%--        </div>--%>
-
-        <div>
-            <form class="form-signin" action="controller" method="POST">
-                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-<%--                <label for="login"><fmt:message key="loginInput" /></label>--%>
-                <input type="text" id="login" class="form-control" placeholder="Login" name="login">
-
-<%--                <label for="pass"><fmt:message key="passwordInput" /></label>--%>
-                <input type="password" id="pass" class="form-control mt-1" placeholder="Password" name="password">
-
-                <button class="btn btn-lg btn-primary btn-block my-3" type="submit" name="command" value="login">GO</button>
+        <div class="login-form">
+            <form action="controller?command=login" method="post">
+                <h2 class="text-center">Sign In</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="login" placeholder="Login" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                </div>
             </form>
+            <p class="text-center"><a href="controller?command=registration">Create an Account</a></p>
         </div>
-
     </body>
 </html>

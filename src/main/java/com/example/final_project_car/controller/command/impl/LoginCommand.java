@@ -42,9 +42,13 @@ public class LoginCommand extends Command {
             user = userService.getUserByLogin(login);
             int id = user.getUserId();
             session.setAttribute("user_id", id);
+            if (user.getUserRoleId() == 1) {
+                page = PageName.MENU_LIST_PAGE;
+            } else {
+                page = PageName.ADMIN_PANEL;
+            }
 //            session.setAttribute("user", user);
             //page = PageName.MENU_LIST_PAGE;
-            page = PageName.MENU_LIST_PAGE;
         }
 //        else if (user == null){
 //            //String message = "User not found";

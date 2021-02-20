@@ -24,7 +24,7 @@ public interface OrderDAO {
 
     public void changeOrderStatusIdOnClosed(int orderId);
 
-    public void addOrder(User user, Car car, int rentDuration);
+    public void addOrder(User user, Car car, boolean withDriver, int rentDuration);
 
     public void addADriver(int orderId);
 

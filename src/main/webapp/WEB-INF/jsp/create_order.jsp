@@ -9,7 +9,7 @@
 </head>
     <body>
             <div>
-                <form action="controller?user_order_list" method="post">
+                <form action="controller?command=user_orders" method="post">
 
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="https://ic.maxabout.us//cars/fiat/bravo//fiat_bravo_12.jpg" alt="Card image cap">
@@ -19,11 +19,11 @@
                             <p class="card-text">Client name: <strong>${user.firstName} ${user.lastName}</strong></p>
                             <p class="card-text">Need a driver? <input type="checkbox"></p>
                             <p class="card-text">Select the rent hours you need:</p>
-                            <input type="number" id="rentDuration" name="rentDuration" value="rentDuration"><br>
+                            <input type="text" id="rentHours" name="rentHours"><br>
                             <p></p>
                             <input type="hidden" id="carId" name="carId" value="${car.carId}">
 
-                            <input type="submit" name="user_order_list" value="Go to your orders">
+                            <input type="submit" name="goToOrders" value="Go to your orders">
                         </div>
                     </div>
                 </form>

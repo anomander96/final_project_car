@@ -24,9 +24,10 @@ public class OrderDAOMySql implements OrderDAO {
     private static final String CHANGE_ORDER_STATUS_ON_DECLINED = "UPDATE orders SET order_status_id = 3 WHERE order_id =";
     private static final String CHANGE_ORDER_STATUS_ON_PAID = "UPDATE orders SET order_status_id = 4 WHERE order_id = ";
     private static final String CHANGE_ORDER_STATUS_ON_CLOSED = "UPDATE orders SET order_status_id = 5 WHERE order_id =";
-    private static final String ADD_ORDER = "INSERT INTO orders (user_id, car_id, order_status_id, create_date, " +
-            "with_driver, rent_duration, total_price) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String ADD_ORDER = "INSERT INTO orders (user_id, car_id, order_status_id, " +
+            "with_driver, rent_hours, total_price) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String ADD_DRIVER = "UPDATE orders SET with_driver = true WHERE order_id = ";
+    private static final String GET_ORDER_BY_ORDER_ID = "SELECT * FROM orders WHERE order_id = ?";
 
     public static OrderDAOMySql getInstance() {
         if (instance == null) {
@@ -64,7 +65,7 @@ public class OrderDAOMySql implements OrderDAO {
 
     @Override
     public Order getOrderByOrderId(int orderId) {
-        Order order;
+        Order order = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -78,14 +79,13 @@ public class OrderDAOMySql implements OrderDAO {
             if (resultSet.next()) {
                 OrderDAOBuilder builder = new OrderDAOBuilder();
                 order = builder.build(resultSet);
-                return order;
             }
         } catch (SQLException e) {
             System.out.println("Should add a Logger");
         } finally {
             closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
-        return null;
+        return order;
     }
 
     @Override
@@ -115,6 +115,30 @@ public class OrderDAOMySql implements OrderDAO {
         }
         return ordersContainer;
     }
+
+//    public Order getOrderByOrderId(int orderId) {
+//        Order order = null;
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            connection = connectionPool.getConnection();
+//            preparedStatement = connection.prepareStatement(GET_ORDER_BY_ORDER_ID);
+//            preparedStatement.setInt(1, orderId);
+//            preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                OrderDAOBuilder builder = new OrderDAOBuilder();
+//                order = builder.build(resultSet);
+//            }
+//        } catch (SQLException e) {
+//            // add a Logger and a custom Exception
+//        } finally {
+//            closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
+//        }
+//        return order;
+//    }
 
     @Override
     public void changeOrderStatusIdOnApproved(int orderId) {
@@ -181,7 +205,7 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public void addOrder(User user, Car car, int rentDuration) {
+    public void addOrder(User user, Car car, boolean withDriver, int rentDuration) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -192,10 +216,13 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement.setInt(1, user.getUserId());
             preparedStatement.setInt(2, car.getCarId());
             preparedStatement.setInt(3, 1);
-            preparedStatement.setDate(4, date);
-            preparedStatement.setBoolean(5, false);
-            preparedStatement.setInt(6, rentDuration);
-            preparedStatement.setBigDecimal(7, car.getPrice());
+//            preparedStatement.setDate(4, date);
+            preparedStatement.setBoolean(4, withDriver);
+            preparedStatement.setInt(5, rentDuration);
+            BigDecimal multiplyRentDuration = new BigDecimal(rentDuration);
+            BigDecimal multiplyCarPrice = car.getPrice();
+            BigDecimal totalPrice = multiplyRentDuration.multiply(multiplyCarPrice);
+            preparedStatement.setBigDecimal(6, totalPrice);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // add a Logger and a custom Exception
@@ -232,6 +259,11 @@ public class OrderDAOMySql implements OrderDAO {
         }
     }
 
+    public static void main(String[] args) {
+        OrderDAOMySql orderDAOMySql = new OrderDAOMySql();
+//        Order checkOrder = orderDAOMySql.getOrderByOrderId(5);
+//        System.out.println(checkOrder.toString());
+//        orderDAOMySql.addOrder(1, 2, false, 44);
 
-
+    }
 }

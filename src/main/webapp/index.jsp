@@ -9,7 +9,7 @@
 <%--            <%@include file="WEB-INF/jsp/header.jsp" %>--%>
 <%--            </div>--%>
 <%--        </header>--%>
-            <jsp:forward page="WEB-INF/jsp/main.jsp"></jsp:forward>
+            <jsp:forward page="WEB-INF/jsp/login.jsp"></jsp:forward>
 <%--        <!-- some main content of index page here -->--%>
 <%--        <div>--%>
 <%--            <h1>Car rental app</h1>--%>

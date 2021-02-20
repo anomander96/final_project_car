@@ -13,6 +13,9 @@ import com.example.final_project_car.model.entity.User;
 import java.sql.Array;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +58,16 @@ public class OrderService {
         return ordersContainer;
     }
 
+    public Order getOrderByOrderId(int orderId) {
+        Order order = null;
+        try {
+            order = orderDAO.getOrderByOrderId(orderId);
+        } catch (Exception e) {
+            // add a Logger and a custom exception
+        }
+        return order;
+    }
+
     public void changeOrderStatusIdOnApproved(int orderId) {
         try {
             orderDAO.changeOrderStatusIdOnApproved(orderId);
@@ -87,7 +100,7 @@ public class OrderService {
         }
     }
 
-    public void createOrderByUser(int userId, int carId, int rentDuration) {
+    public void createOrderByUser(int userId, int carId, boolean withDriver, int rentDuration) {
         User user = null;
         Car car = null;
 
@@ -104,7 +117,7 @@ public class OrderService {
         }
 
         try {
-            orderDAO.addOrder(user, car, rentDuration);
+            orderDAO.addOrder(user, car, withDriver, rentDuration);
         } catch (Exception e) {
             // add a Logger and a custom exception
         }
@@ -118,6 +131,9 @@ public class OrderService {
         }
     }
 
-
+    public static void main(String[] args) throws ParseException {
+        OrderService orderService = new OrderService();
+        orderService.createOrderByUser(1, 2, true, 333);
+    }
 
 }

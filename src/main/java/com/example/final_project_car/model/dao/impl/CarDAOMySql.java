@@ -24,6 +24,8 @@ public class CarDAOMySql implements CarDAO {
     private static final String INSERT_CAR = "INSERT INTO car (car_category_id, brand_name, model_name, color, price)" +
             " VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_CAR_CATEGORY = "UPDATE car SET car_category_id = ? WHERE car_id = ?";
+    private static final String SELECT_CARS_WITH_LIMIT = "SELECT * FROM car LIMIT ?, ?";
+    private static final String GET_NUMBER_OF_ROWS = "SELECT COUNT(car_id) FROM car";
 
     public static CarDAOMySql getInstance() {
         if (instance == null) {
@@ -162,10 +164,64 @@ public class CarDAOMySql implements CarDAO {
         }
     }
 
+    @Override
+    public List<Car> findCars(int currentPage, int recordsPerPage) {
+        List<Car> cars = new ArrayList<>();
+        int start = currentPage * recordsPerPage - recordsPerPage;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_CARS_WITH_LIMIT);
+            preparedStatement.setInt(1, currentPage);
+            preparedStatement.setInt(2, recordsPerPage);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                CarDAOBuilder builder = new CarDAOBuilder();
+                Car car = builder.build(resultSet);
+                cars.add(car);
+            }
+        } catch (SQLException e) {
+            // add a Logger and a custom exception
+
+        } finally {
+            if (connection != null) {
+                connectionPool.closeConnection(connection, preparedStatement, resultSet);
+            }
+        } return cars;
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        Integer numberOfRows = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(GET_NUMBER_OF_ROWS);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                numberOfRows = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            // add a Logger and a custom exception
+        } finally {
+            if (connection != null) {
+                connectionPool.closeConnection(connection, preparedStatement);
+            }
+        } return numberOfRows;
+    }
+
     public static void main(String[] args) {
-//        CarDAOMySql manager = new CarDAOMySql();
-//        //System.out.println(manager.delete(2));
-//        Car car = new Car();
-//       // manager.addNewCar();
+        CarDAOMySql manager = new CarDAOMySql();
+        //System.out.println(manager.delete(2));
+        System.out.println(manager.getNumberOfRows());
+       // manager.addNewCar();
     }
 }

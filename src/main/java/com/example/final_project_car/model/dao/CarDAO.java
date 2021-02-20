@@ -14,6 +14,15 @@ public interface CarDAO {
     public boolean update(Car car);
 
     public void addNewCar(Car car);
+
+
+    // pagination methods
+    public List<Car> findCars(int currentPage, int numberOfRecords);
+    public Integer getNumberOfRows();
+
+
+
+
     //public boolean add(Car car); //
 
     // should think how to do a filter by brand name
