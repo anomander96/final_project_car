@@ -31,14 +31,17 @@ public class CommandContainer {
         commandsContainer.put("go_to_user_orders", new GoToUserOrdersPage());
 
         commandsContainer.put("go_to_home_page", new GoToHomePage());
+        commandsContainer.put("go_to_admin_panel", new GoToAdminPanel());
+        commandsContainer.put("all_orders", new AllOrdersCommand());
+
+        commandsContainer.put("all_cars", new AllCarsCommand());
+
+        commandsContainer.put("change_order_status_on_approved", new ChangeOrderStatusOnApproved());
+        commandsContainer.put("change_order_status_on_canceled", new ChangeOrderStatusOnCanceled());
+        commandsContainer.put("change_order_status_on_paid", new ChangeOrderStatusOnPaid());
+        commandsContainer.put("change_order_status_on_closed", new ChangeOrderStatusOnClosed());
 
 
-
-        // команда для офорлмення замовлення
-        // команда для зміни пароля
-        //
-//        commandsContainer.put("logout", new LogoutCommand());
-//        commandsContainer.put("noCommand", new NoCommand());
     }
 
     public static Command get(String commandName) {

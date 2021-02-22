@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Your profile</title>
+    <meta charset="utf-8" />
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,7 +15,7 @@
     <body>
     <%@include file="navbar_client.jsp"%>
         <h2>Welcome ${user.firstName}</h2>
-        <table border="1">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <th>First Name</th>

@@ -1,6 +1,5 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="navbar_admin.jsp"%>
 <html>
 <head>
     <title>Admin panel</title>
@@ -13,29 +12,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
         <body>
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Create a new Admin</h5>
-<%--                        <p class="card-text"></p>--%>
-                        <form action="controller?command=go_to_create_admin" method="post">
-                        <input type="submit" name="createUser" value="Add admin">
-<%--                        <a href="#" class="btn btn-primary">Go somewhere</a>--%>
-                        </form>
-                    </div>
+        <%@include file="navbar_admin.jsp"%>
+
+                <div class="jumbotron">
+                    <center>
+                    <h2 class="display-4">Hello, ${user.firstName}</h2>
+                    <p class="lead">Welcome to admin panel</p>
+                    </center>
+                    <hr class="my-4">
+                    <p>Choose option:</p>
+
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_admin" role="button">Create Admin</a>
+                    </p>
+
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_car" role="button">Create Car</a>
+                    </p>
                 </div>
 
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Add a new Car</h5>
-                        <%--                        <p class="card-text"></p>--%>
-                        <form action="controller?command=go_to_create_car" method="post">
-                            <input type="submit" name="createUser" value="Add car">
-                            <%--                        <a href="#" class="btn btn-primary">Go somewhere</a>--%>
-                        </form>
-                    </div>
-                </div>
 
         </body>
 </html>

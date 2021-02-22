@@ -6,6 +6,7 @@ import com.example.final_project_car.model.entity.Car;
 import com.example.final_project_car.service.builder.CarServiceBuilder;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarService {
@@ -83,15 +84,13 @@ public class CarService {
     }
 
 //    public static void main(String[] args) {
-//
-//        //carService.createCar("1", "Volvo", "XS90", "white", 90);
-////        CarServiceBuilder builder = new CarServiceBuilder();
-////        Car car = builder.build("1", "Volvo", "CSI", "black", 22);
-////        CarService carService = new CarService();
-////        carService.updateCar(car);
+//        List<Car> cars = new ArrayList<>();
 //        CarService carService = new CarService();
-//        CarServiceBuilder builder = new CarServiceBuilder();
-//        //Car car = builder.build("1", "Lada", "Samara", "gray", 13);
-//        carService.createCar("1", "Tesla", "Model X", "white", 27);
+//        try {
+//            cars = carService.getAllCars();
+//        } catch (Exception e) {
+//            //
+//        }
+//        System.out.println(cars.toString());
 //    }
 }

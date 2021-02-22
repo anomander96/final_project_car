@@ -21,14 +21,18 @@
     <%@include file="navbar_client.jsp"%>
         <div>
         <table class="table table-striped table-hover">
+            <thead>
+
            <thead>
            <tr>
            <th>Order ID</th>
            <th>User ID</th>
            <th>Order Status</th>
            <th>With Driver</th>
-           <th>Rent Hours</th>
+               <td>Order Time</td>
+           <th>Rent Duration</th>
            <th>Total Price</th>
+               <th>Pay Your Order</th>
            </tr>
            </thead>
             <c:forEach items="${orders}" var="order">
@@ -40,6 +44,22 @@
                     <td>PENDING</td>
                     </c:if>
 
+                    <c:if test="${order.orderStatusId == 2}">
+                        <td>APPROVED</td>
+                    </c:if>
+
+                    <c:if test="${order.orderStatusId == 3}">
+                        <td>CANCELED</td>
+                    </c:if>
+
+                    <c:if test="${order.orderStatusId == 4}">
+                        <td>PAID</td>
+                    </c:if>
+
+                    <c:if test="${order.orderStatusId == 5}">
+                        <td>CLOSED</td>
+                    </c:if>
+
                     <c:if test="${order.withDriver == false}">
                     <td>NO</td>
                     </c:if>
@@ -48,8 +68,25 @@
                         <td>YES</td>
                     </c:if>
 
-                    <td>${order.rentDuration}</td>
-                    <td>${order.totalPrice}</td>
+                    <td>${order.createDate}</td>
+
+                    <c:choose>
+                        <c:when test="${order.rentDuration=='1'}">
+                            <td>${order.rentDuration} day</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${order.rentDuration} days</td>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <td>${order.totalPrice}$</td>
+
+                    <td>
+                        <form action="controller?command=change_order_status_on_paid" method="post">
+                            <input type="hidden" name="orderId" value="${order.orderId}">
+                            <input type="submit" name="pay" value="Pay">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

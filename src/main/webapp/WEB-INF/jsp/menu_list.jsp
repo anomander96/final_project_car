@@ -17,13 +17,13 @@
         <%@include file="navbar_client.jsp"%>
 
         <div class="jumbotron">
-            <h2 class="display-4">Hello, ${user.firstName}!</h2>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <h2 class="display-4">Welcome, ${user.firstName}!</h2>
+            <p class="lead"></p>
             <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p>Choose your car</p>
             <p class="lead">
                 <form action="controller?command=cars_list&pageNumber=1" method="post">
-                    <input class="btn btn-primary" type="submit" name="carsList" value="Go to a car list">
+                    <input class="btn btn-primary" type="submit" name="carsList" value="Go to car list">
                 </form>
             </p>
         </div>

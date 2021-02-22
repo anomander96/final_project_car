@@ -3,6 +3,7 @@ package com.example.final_project_car.model.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Order implements Serializable {
@@ -12,7 +13,7 @@ public class Order implements Serializable {
     private int carId;
     private int orderStatusId;
     private boolean withDriver;
-    private Date createDate;
+    private Timestamp createDate;
 //    private Time rentDuration; // як варіант замінити на простий інт rentHours, тоді можна буде порахувати
     private int rentDuration;
     private BigDecimal totalPrice;
@@ -49,11 +50,11 @@ public class Order implements Serializable {
         this.orderStatusId = orderStatusId;
     }
 
-    public Date getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 
@@ -90,44 +91,6 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    // варто подумати над сутністю order_status, або додати поле в таблицю orders, або подумати інший спосіб
-
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Order order = (Order) o;
-//        return orderId == order.orderId &&
-//                userId == order.userId &&
-//                carId == order.carId &&
-//                orderStatusId == order.orderStatusId &&
-//                withDriver == order.withDriver &&
-//                rentDuration == order.rentDuration &&
-//                Objects.equals(createDate, order.createDate) &&
-//                Objects.equals(totalPrice, order.totalPrice);
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(orderId, userId, carId,
-//                orderStatusId, createDate, withDriver, rentDuration, totalPrice);
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Order{" +
-//                "orderId=" + orderId +
-//                ", userId=" + userId +
-//                ", carId=" + carId +
-//                ", orderStatusId=" + orderStatusId +
-//                ", createDate=" + createDate +
-//                ", withDriver=" + withDriver +
-//                ", rentDuration=" + rentDuration +
-//                ", totalPrice=" + totalPrice +
-//                '}';
-//    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -140,5 +103,19 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(orderId, userId, carId, orderStatusId, withDriver, createDate, rentDuration, totalPrice);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", carId=" + carId +
+                ", orderStatusId=" + orderStatusId +
+                ", withDriver=" + withDriver +
+                ", createDate=" + createDate +
+                ", rentDuration=" + rentDuration +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }

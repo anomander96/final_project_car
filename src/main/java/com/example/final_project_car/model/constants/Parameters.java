@@ -28,7 +28,7 @@ public class Parameters {
     // Order entity
     public static final String ORDER_ID = "order_id";
     public static final String ORDER_STATUS_ID = "order_status_id";
-    public static final String CREATE_DATE = "create_date";
+    public static final String CREATE_DATE = "creation_date";
     public static final String WITH_DRIVER = "with_driver";
     public static final String RENT_DURATION = "rent_duration";
     public static final String TOTAL_PRICE = "total_price";

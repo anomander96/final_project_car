@@ -197,15 +197,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="controller?command=go_to_home_page">Home</a></li>
                     <li><a href="controller?command=user_profile">My Profile</a></li>
-<%--                    <li class="dropdown">--%>
-<%--                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Services <b class="caret"></b></a>--%>
-<%--                        <ul class="dropdown-menu">--%>
-<%--                            <li><a href="#">Web Design</a></li>--%>
-<%--                            <li><a href="#">Web Development</a></li>--%>
-<%--                            <li><a href="#">Graphic Design</a></li>--%>
-<%--                            <li><a href="#">Digital Marketing</a></li>--%>
-<%--                        </ul>--%>
-<%--                    </li>--%>
+
                     <li class="active"><a href="controller?command=go_to_user_orders">My orders</a></li>
                     <%--<li><a href="#">Blog</a></li>
                     <li><a href="#">Contact</a></li>--%>
@@ -217,28 +209,8 @@
 <%--                    </div>--%>
 <%--                </form>--%>
                 <ul class="nav navbar-nav navbar-right">
-<%--                    <li>--%>
-<%--                        <a data-toggle="dropdown" class="dropdown-toggle" href="controller?command=logout">Logout</a>--%>
-<%--                        <ul class="dropdown-menu login-form">--%>
-<%--                            <li>--%>
-<%--                                <form action="/examples/actions/confirmation.php" method="post">--%>
-<%--                                    <div class="form-group">--%>
-<%--                                        <label>Username</label>--%>
-<%--                                        <input type="text" class="form-control" required="required">--%>
-<%--                                    </div>--%>
-<%--                                    <div class="form-group">--%>
-<%--                                        <div class="clearfix">--%>
-<%--                                            <label>Password</label>--%>
-<%--                                            <a href="#" class="pull-right text-muted"><small>Forgot?</small></a>--%>
-<%--                                        </div>--%>
 
-<%--                                        <input type="password" class="form-control" required="required">--%>
-<%--                                    </div>--%>
-<%--                                    <input type="submit" class="btn btn-primary btn-block" value="Login">--%>
-<%--                                </form>--%>
-<%--                            </li>--%>
-<%--                        </ul>--%>
-<%--                    </li>--%>
+<%--                    <li>admin: ${user.firstName}</li>--%>
                     <li><a href="controller?command=logout" class="btn btn-primary mt-1 mb-1">Logout</a></li>
                 </ul>
             </div>

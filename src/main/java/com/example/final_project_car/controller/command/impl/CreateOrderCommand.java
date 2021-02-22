@@ -2,8 +2,12 @@ package com.example.final_project_car.controller.command.impl;
 
 import com.example.final_project_car.controller.command.Command;
 import com.example.final_project_car.model.constants.PageName;
+import com.example.final_project_car.model.entity.Car;
 import com.example.final_project_car.model.entity.Order;
+import com.example.final_project_car.model.entity.User;
+import com.example.final_project_car.service.CarService;
 import com.example.final_project_car.service.OrderService;
+import com.example.final_project_car.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +18,7 @@ import java.util.List;
 public class CreateOrderCommand extends Command {
     private static final long serialVersionUID = -4122067013181622174L;
     private final OrderService orderService = new OrderService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

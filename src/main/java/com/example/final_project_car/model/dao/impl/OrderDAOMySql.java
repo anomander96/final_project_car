@@ -25,7 +25,7 @@ public class OrderDAOMySql implements OrderDAO {
     private static final String CHANGE_ORDER_STATUS_ON_PAID = "UPDATE orders SET order_status_id = 4 WHERE order_id = ";
     private static final String CHANGE_ORDER_STATUS_ON_CLOSED = "UPDATE orders SET order_status_id = 5 WHERE order_id =";
     private static final String ADD_ORDER = "INSERT INTO orders (user_id, car_id, order_status_id, " +
-            "with_driver, rent_hours, total_price) VALUES (?, ?, ?, ?, ?, ?);";
+            "with_driver, creation_date, rent_duration, total_price) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String ADD_DRIVER = "UPDATE orders SET with_driver = true WHERE order_id = ";
     private static final String GET_ORDER_BY_ORDER_ID = "SELECT * FROM orders WHERE order_id = ?";
 
@@ -211,18 +211,17 @@ public class OrderDAOMySql implements OrderDAO {
 
         try {
             connection = connectionPool.getConnection();
-            Date date = new Date(System.currentTimeMillis());
             preparedStatement = connection.prepareStatement(ADD_ORDER);
             preparedStatement.setInt(1, user.getUserId());
             preparedStatement.setInt(2, car.getCarId());
             preparedStatement.setInt(3, 1);
-//            preparedStatement.setDate(4, date);
             preparedStatement.setBoolean(4, withDriver);
-            preparedStatement.setInt(5, rentDuration);
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setInt(6, rentDuration);
             BigDecimal multiplyRentDuration = new BigDecimal(rentDuration);
             BigDecimal multiplyCarPrice = car.getPrice();
             BigDecimal totalPrice = multiplyRentDuration.multiply(multiplyCarPrice);
-            preparedStatement.setBigDecimal(6, totalPrice);
+            preparedStatement.setBigDecimal(7, totalPrice);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             // add a Logger and a custom Exception
@@ -261,9 +260,6 @@ public class OrderDAOMySql implements OrderDAO {
 
     public static void main(String[] args) {
         OrderDAOMySql orderDAOMySql = new OrderDAOMySql();
-//        Order checkOrder = orderDAOMySql.getOrderByOrderId(5);
-//        System.out.println(checkOrder.toString());
-//        orderDAOMySql.addOrder(1, 2, false, 44);
-
+        orderDAOMySql.changeOrderStatusIdOnApproved(1);
     }
 }

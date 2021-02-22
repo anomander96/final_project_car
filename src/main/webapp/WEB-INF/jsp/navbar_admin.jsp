@@ -194,8 +194,8 @@
             <!-- Collection of nav links, forms, and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="controller?command=go_to_home_page">Home</a></li>
-                    <li><a href="controller?command=user_profile">My Profile</a></li>
+                    <li><a href="controller?command=go_to_admin_panel">Home</a></li>
+                    <li><a href="controller?command=all_orders">All Orders</a></li>
                     <%--                    <li class="dropdown">--%>
                     <%--                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Services <b class="caret"></b></a>--%>
                     <%--                        <ul class="dropdown-menu">--%>
@@ -205,7 +205,7 @@
                     <%--                            <li><a href="#">Digital Marketing</a></li>--%>
                     <%--                        </ul>--%>
                     <%--                    </li>--%>
-                    <li class="active"><a href="controller?command=go_to_user_orders">Customer Orders </a></li>
+                    <li class="active"><a href="controller?command=all_cars">All Cars</a></li>
                     <%--<li><a href="#">Blog</a></li>
                     <li><a href="#">Contact</a></li>--%>
                 </ul>

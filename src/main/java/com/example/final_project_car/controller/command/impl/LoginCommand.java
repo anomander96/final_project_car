@@ -42,6 +42,7 @@ public class LoginCommand extends Command {
             user = userService.getUserByLogin(login);
             int id = user.getUserId();
             session.setAttribute("user_id", id);
+            session.setAttribute("user", user);
             if (user.getUserRoleId() == 1) {
                 page = PageName.MENU_LIST_PAGE;
             } else {

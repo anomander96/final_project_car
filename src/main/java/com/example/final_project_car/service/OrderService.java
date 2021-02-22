@@ -23,21 +23,6 @@ public class OrderService {
     private final OrderDAO orderDAO = new OrderDAOMySql();
     private final UserDAO userDAO = new UserDAOMySql();
     private final CarDAO carDAO = new CarDAOMySql();
-//0.+++    public List<Order> getAllOrders();
-//
-//1.    public Order getOrderByOrderId(int orderId);
-//
-//3.+++    public Order getOrderByUserId(int userId);
-//
-//4.+++    public void changeOrderStatusIdOnApproved(int orderId);
-//
-//5.+++    public void changeOrderStatusIdOnDeclined(int orderId);
-//
-//6.+++    public void changeOrderStatusIdOnPaid(int orderId);
-//
-//7.+++    public void changeOrderStatusIdOnClosed(int orderId);
-
-    //8. +++  public void createOrderByUser()
 
     public List<Order> getAllOrders() throws Exception { // add a custom Exception signature
         try {
@@ -133,7 +118,8 @@ public class OrderService {
 
     public static void main(String[] args) throws ParseException {
         OrderService orderService = new OrderService();
-        orderService.createOrderByUser(1, 2, true, 333);
+        orderService.createOrderByUser(1, 4, true, 5);
+
     }
 
 }
