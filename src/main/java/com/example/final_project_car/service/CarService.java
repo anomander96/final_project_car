@@ -82,15 +82,4 @@ public class CarService {
             // add a Logger and a custom Exception
         } return numberOfRows;
     }
-
-//    public static void main(String[] args) {
-//        List<Car> cars = new ArrayList<>();
-//        CarService carService = new CarService();
-//        try {
-//            cars = carService.getAllCars();
-//        } catch (Exception e) {
-//            //
-//        }
-//        System.out.println(cars.toString());
-//    }
 }

@@ -5,7 +5,10 @@ import com.example.final_project_car.model.dao.builder.OrderDAOBuilder;
 import com.example.final_project_car.model.entity.Car;
 import com.example.final_project_car.model.entity.Order;
 import com.example.final_project_car.model.entity.User;
+import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -16,6 +19,7 @@ import java.util.List;
 public class OrderDAOMySql implements OrderDAO {
     private static OrderDAOMySql instance;
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger LOGGER = LogManager.getLogger(OrderDAOMySql.class);
 
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders";
     private static final String SELECT_ORDER_BY_ORDER_ID = "SELECT * FROM orders WHERE order_id = ?";
@@ -37,7 +41,7 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders() throws DAOException {
         List<Order> ordersContainer = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -54,7 +58,8 @@ public class OrderDAOMySql implements OrderDAO {
                 ordersContainer.add(order);
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("Database error! Couldn't get all orders", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -64,7 +69,7 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public Order getOrderByOrderId(int orderId) {
+    public Order getOrderByOrderId(int orderId) throws DAOException {
         Order order = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -81,7 +86,8 @@ public class OrderDAOMySql implements OrderDAO {
                 order = builder.build(resultSet);
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("Database error! Couldn't find order by order id", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
@@ -89,7 +95,7 @@ public class OrderDAOMySql implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrdersByUserId(int userId) {
+    public List<Order> getOrdersByUserId(int userId) throws DAOException {
         List<Order> ordersContainer = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -109,39 +115,16 @@ public class OrderDAOMySql implements OrderDAO {
             }
 
         } catch (SQLException e) {
-            // add a Logger and a custom Exception
+            LOGGER.error("Database error! Couldn't find order with this user id", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
         return ordersContainer;
     }
 
-//    public Order getOrderByOrderId(int orderId) {
-//        Order order = null;
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//
-//        try {
-//            connection = connectionPool.getConnection();
-//            preparedStatement = connection.prepareStatement(GET_ORDER_BY_ORDER_ID);
-//            preparedStatement.setInt(1, orderId);
-//            preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                OrderDAOBuilder builder = new OrderDAOBuilder();
-//                order = builder.build(resultSet);
-//            }
-//        } catch (SQLException e) {
-//            // add a Logger and a custom Exception
-//        } finally {
-//            closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
-//        }
-//        return order;
-//    }
-
     @Override
-    public void changeOrderStatusIdOnApproved(int orderId) {
+    public void changeOrderStatusIdOnApproved(int orderId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -150,14 +133,15 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement = connection.prepareStatement(CHANGE_ORDER_STATUS_ON_APPROVED + orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // add a Logger here and a custom Exception
+            LOGGER.error("Database error! Couldn't change order status on approved", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
     }
 
     @Override
-    public void changeOrderStatusIdOnDeclined(int orderId) {
+    public void changeOrderStatusIdOnDeclined(int orderId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -166,14 +150,15 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement = connection.prepareStatement(CHANGE_ORDER_STATUS_ON_DECLINED + orderId);
             preparedStatement.executeUpdate();
         } catch(SQLException e) {
-            // add a Logger and a custom exception
+            LOGGER.error("Database error! Couldn't change order status on declined", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
     }
 
     @Override
-    public void changeOrderStatusIdOnPaid(int orderId) {
+    public void changeOrderStatusIdOnPaid(int orderId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -182,14 +167,15 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement = connection.prepareStatement(CHANGE_ORDER_STATUS_ON_PAID + orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // add a Logger and a custom Exception here
+            LOGGER.error("Database error! Couldn't change order status on paid", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
     }
 
     @Override
-    public void changeOrderStatusIdOnClosed(int orderId) {
+    public void changeOrderStatusIdOnClosed(int orderId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -198,14 +184,15 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement = connection.prepareStatement(CHANGE_ORDER_STATUS_ON_CLOSED + orderId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // add a logger and a custom Exception
+            LOGGER.error("Database error! Couldn't change order status on closed", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
     }
 
     @Override
-    public void addOrder(User user, Car car, boolean withDriver, int rentDuration) {
+    public void addOrder(User user, Car car, boolean withDriver, int rentDuration) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -224,14 +211,15 @@ public class OrderDAOMySql implements OrderDAO {
             preparedStatement.setBigDecimal(7, totalPrice);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // add a Logger and a custom Exception
+            LOGGER.error("Database error! Couldn't add new order", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
     }
 
     @Override
-    public void addADriver(int orderId) {
+    public void addADriver(int orderId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -240,7 +228,8 @@ public class OrderDAOMySql implements OrderDAO {
            preparedStatement = connection.prepareStatement(ADD_DRIVER + orderId);
            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // add a Logger and a custom Exception
+            LOGGER.error("Database error! Couldn't add a driver to order with such order id", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
@@ -256,10 +245,5 @@ public class OrderDAOMySql implements OrderDAO {
         if (connection != null) {
             connectionPool.closeConnection(connection, preparedStatement, resultSet);
         }
-    }
-
-    public static void main(String[] args) {
-        OrderDAOMySql orderDAOMySql = new OrderDAOMySql();
-        orderDAOMySql.changeOrderStatusIdOnApproved(1);
     }
 }

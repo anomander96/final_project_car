@@ -196,18 +196,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="controller?command=go_to_admin_panel">Home</a></li>
                     <li><a href="controller?command=all_orders">All Orders</a></li>
-                    <%--                    <li class="dropdown">--%>
-                    <%--                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Services <b class="caret"></b></a>--%>
-                    <%--                        <ul class="dropdown-menu">--%>
-                    <%--                            <li><a href="#">Web Design</a></li>--%>
-                    <%--                            <li><a href="#">Web Development</a></li>--%>
-                    <%--                            <li><a href="#">Graphic Design</a></li>--%>
-                    <%--                            <li><a href="#">Digital Marketing</a></li>--%>
-                    <%--                        </ul>--%>
-                    <%--                    </li>--%>
-                    <li class="active"><a href="controller?command=all_cars">All Cars</a></li>
-                    <%--<li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>--%>
+                    <li><a href="controller?command=all_cars">All Cars</a></li>
+                    <li><a href="controller?command=all_accidents">All Accidents</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="controller?command=logout" class="btn btn-primary mt-1 mb-1">Logout</a></li>

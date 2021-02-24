@@ -1,8 +1,7 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add a car</title>
+    <title>Update Car</title>
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -92,31 +91,31 @@
     </style>
 </head>
         <body>
-        <%@include file="navbar_admin.jsp"%>
-                <div class="signup-form">
-                    <form action="controller?command=create_car" method="post">
-                        <h3>Car creation</h3>
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="car_category_id" placeholder="Car Category ID (1-5)" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="model_name" placeholder="Model Name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="color" placeholder="Color" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="price" placeholder="Price/Day" required="required">
-                        </div>
+            <%@include file="navbar_admin.jsp"%>
+            <div class="signup-form">
+                <form action="controller?command=update_car" method="post">
+                    <h3>Update Car</h3>
+                    <hr>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="car_category_id" placeholder="Car Category ID (1-5)" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="model_name" placeholder="Model Name" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="color" placeholder="Color" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="price" placeholder="Price/Day" required="required">
+                    </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg">Add Car</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                    </div>
+                </form>
+            </div>
         </body>
 </html>

@@ -2,6 +2,7 @@ package com.example.final_project_car.model.constants;
 
 public class PageName {
 
+    public static final String INDEX_PAGE = "index.jsp";
     public static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
     public static final String SIGN_UP_PAGE = "/WEB-INF/jsp/sign_up.jsp";
     public static final String USER_PROFILE_PAGE = "/WEB-INF/jsp/user_profile.jsp";
@@ -17,4 +18,7 @@ public class PageName {
     public static final String CREATE_CAR = "WEB-INF/jsp/create_car.jsp";
     public static final String ALL_USERS_ORDERS = "WEB-INF/jsp/all_users_orders.jsp";
     public static final String ALL_CARS = "WEB-INF/jsp/all_cars.jsp";
+    public static final String ALL_ACCIDENTS = "WEB-INF/jsp/all_accidents.jsp";
+    public static final String CREATE_ACCIDENT = "WEB-INF/jsp/create_accident.jsp";
+    public static final String UPDATE_CAR = "WEB-INF/jsp/update_car.jsp";
 }

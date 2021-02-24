@@ -1,6 +1,8 @@
 package com.example.final_project_car.model.dao;
 
 import com.example.final_project_car.model.entity.Accident;
+import com.example.final_project_car.model.entity.Order;
+
 import java.util.List;
 
 public interface AccidentDAO {
@@ -10,4 +12,9 @@ public interface AccidentDAO {
     public Accident getAccidentById(int accidentId); // Should write an own exception for DAO
 
     public boolean delete(Integer accidentId);
+
+    public void add(Accident accident);
+
+
+
 }

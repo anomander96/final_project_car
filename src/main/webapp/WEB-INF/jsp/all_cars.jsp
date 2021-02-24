@@ -36,10 +36,16 @@
             <td>${car.color}</td>
             <td>${car.price}$</td>
             <td>
+                <form action="controller?command=go_to_update_car" method="post">
+                    <input type="hidden" name="car_id" value="${car.carId}">
                 <input type="submit" name="update_car" value="Update">
+                </form>
             </td>
             <td>
+                <form action="controller?command=delete_car" method="post">
+                    <input type="hidden" name="car_id" value="${car.carId}">
                 <input type="submit" name="delete_car" value="Delete">
+                </form>
             </td>
         </tr>
     </c:forEach>

@@ -3,7 +3,10 @@ package com.example.final_project_car.model.dao.impl;
 import com.example.final_project_car.model.dao.CarDAO;
 import com.example.final_project_car.model.dao.builder.CarDAOBuilder;
 import com.example.final_project_car.model.entity.Car;
+import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,7 @@ import java.util.List;
 public class CarDAOMySql implements CarDAO {
     private static CarDAOMySql instance;
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger LOGGER = LogManager.getLogger(CarDAOMySql.class);
 
     private static final String SELECT_ALL_CARS = "SELECT * FROM car";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM car WHERE car_id = ?";
@@ -35,7 +39,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public List<Car> getAllCars() {
+    public List<Car> getAllCars() throws DAOException {
         List<Car> carContainer = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -52,7 +56,8 @@ public class CarDAOMySql implements CarDAO {
                 carContainer.add(car);
             }
         } catch (SQLException e) {
-            System.out.println("Should use a Logger");
+            LOGGER.error("Database error! Couldn't retrieve all cars!", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -62,7 +67,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public Car getCarById(int carId) {
+    public Car getCarById(int carId) throws DAOException {
         Car car = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -79,7 +84,8 @@ public class CarDAOMySql implements CarDAO {
                 car = builder.build(resultSet);
             }
         } catch (SQLException e) {
-            System.out.println("Should use a Logger");
+            LOGGER.error("Database error! Couldn't find a car with this car id", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -89,7 +95,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public boolean delete(Integer carId) {
+    public boolean delete(Integer carId) throws DAOException {
         boolean result = false;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -102,7 +108,8 @@ public class CarDAOMySql implements CarDAO {
                 preparedStatement.executeUpdate();
                 result = true;
             } catch (SQLException e) {
-                System.out.println("Should add a Logger");
+                LOGGER.error("Database error! Couldn't delete a car", e);
+                throw new DAOException(e);
             } finally {
                 if (connection != null) {
                     connectionPool.closeConnection(connection, preparedStatement);
@@ -113,8 +120,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public boolean update(Car car) {
-        boolean result = false;
+    public void update(Car car) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -128,19 +134,19 @@ public class CarDAOMySql implements CarDAO {
             preparedStatement.setBigDecimal(5, car.getPrice());
             preparedStatement.setInt(6, car.getCarId());
             preparedStatement.executeUpdate();
-            result = true;
         } catch (SQLException e) {
-            // add a Logger and a custom Exception
+            LOGGER.error("Database error! Couldn't update car", e);
+            throw new DAOException(e);
 
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement);
             }
-        } return result;
+        }
     }
 
     @Override
-    public void addNewCar(Car car) {
+    public void addNewCar(Car car) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -156,7 +162,8 @@ public class CarDAOMySql implements CarDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            // add a Logger and a custom DAO Exception
+            LOGGER.error("Database error! Couldn't add a new car", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement);
@@ -165,7 +172,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public List<Car> findCars(int currentPage, int recordsPerPage) {
+    public List<Car> findCars(int currentPage, int recordsPerPage) throws DAOException {
         List<Car> cars = new ArrayList<>();
         int start = currentPage * recordsPerPage - recordsPerPage;
 
@@ -185,8 +192,8 @@ public class CarDAOMySql implements CarDAO {
                 cars.add(car);
             }
         } catch (SQLException e) {
-            // add a Logger and a custom exception
-
+            LOGGER.error("Database error! Couldn't find all needed cars for pagination", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -195,7 +202,7 @@ public class CarDAOMySql implements CarDAO {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DAOException {
         Integer numberOfRows = 0;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -210,18 +217,12 @@ public class CarDAOMySql implements CarDAO {
             }
 
         } catch (SQLException e) {
-            // add a Logger and a custom exception
+            LOGGER.error("Database error! Couldn't get number of rows in table for pagination", e);
+            throw new DAOException(e);
         } finally {
             if (connection != null) {
                 connectionPool.closeConnection(connection, preparedStatement);
             }
         } return numberOfRows;
-    }
-
-    public static void main(String[] args) {
-        CarDAOMySql manager = new CarDAOMySql();
-        //System.out.println(manager.delete(2));
-        System.out.println(manager.getNumberOfRows());
-       // manager.addNewCar();
     }
 }

@@ -35,11 +35,19 @@ public class CommandContainer {
         commandsContainer.put("all_orders", new AllOrdersCommand());
 
         commandsContainer.put("all_cars", new AllCarsCommand());
+        commandsContainer.put("delete_car", new DeleteCar());
+        commandsContainer.put("update_car", new UpdateCar());
+        commandsContainer.put("go_to_update_car", new GoToUpdateCarPage());
 
         commandsContainer.put("change_order_status_on_approved", new ChangeOrderStatusOnApproved());
         commandsContainer.put("change_order_status_on_canceled", new ChangeOrderStatusOnCanceled());
         commandsContainer.put("change_order_status_on_paid", new ChangeOrderStatusOnPaid());
         commandsContainer.put("change_order_status_on_closed", new ChangeOrderStatusOnClosed());
+
+        commandsContainer.put("all_accidents", new AllAccidentsCommand());
+        commandsContainer.put("go_to_create_accident", new GoToCreateAccident());
+        commandsContainer.put("create_accident", new CreateAccident());
+        commandsContainer.put("delete_accident", new DeleteAccident());
 
 
     }

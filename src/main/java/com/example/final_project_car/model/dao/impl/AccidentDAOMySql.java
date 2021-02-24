@@ -5,10 +5,8 @@ import com.example.final_project_car.model.dao.builder.AccidentDAOBuilder;
 import com.example.final_project_car.model.entity.Accident;
 import com.example.final_project_car.model.pool.ConnectionPool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +17,8 @@ public class AccidentDAOMySql implements AccidentDAO {
     private static final String SELECT_ALL_ACCIDENTS = "SELECT * FROM accident";
     private static final String SELECT_ACCIDENT_BY_ID = "SELECT * FROM accident WHERE accident_id = ?";
     private static final String DELETE_QUERY = "DELETE FROM accident WHERE accident_id = ?";
+    private static final String ADD_ACCIDENT = "INSERT INTO accident (accident_category_id, order_id, description, accident_time, cost_per_damage) " +
+            "VALUES (?, ?, ?, ?, ?);";
 
     public static AccidentDAOMySql getInstance() {
         if (instance == null) {
@@ -44,20 +44,17 @@ public class AccidentDAOMySql implements AccidentDAO {
                 Accident accident = builder.build(resultSet);
                 accidentsContainer.add(accident);
             }
-
         } catch (SQLException e) {
             System.out.println("Should add a Logger");
         } finally {
-            if (connection != null) {
-                connectionPool.closeConnection(connection, preparedStatement, resultSet);
-            }
+            closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
         return accidentsContainer;
     }
 
     @Override
     public Accident getAccidentById(int accidentId) {
-        Accident accident = null;
+        Accident accident = new Accident();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -75,9 +72,7 @@ public class AccidentDAOMySql implements AccidentDAO {
         } catch (SQLException e) {
             System.out.println("Should add a Logger");
         } finally {
-            if (connection != null) {
-                connectionPool.closeConnection(connection, preparedStatement, resultSet);
-            }
+            closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
         return accident;
     }
@@ -99,10 +94,43 @@ public class AccidentDAOMySql implements AccidentDAO {
         } catch (SQLException e) {
             System.out.println("Should add a Logger");
         } finally {
-            if (connection != null) {
-                connectionPool.closeConnection(connection, preparedStatement);
-            }
+            closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
         return result;
+    }
+
+    @Override
+    public void add(Accident accident) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        if (accident != null) {
+            try {
+                connection = connectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(ADD_ACCIDENT);
+                preparedStatement.setInt(1, accident.getAccidentCategoryId());
+                preparedStatement.setInt(2, accident.getOrderId());
+                preparedStatement.setString(3, accident.getDescription());
+                preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                preparedStatement.setBigDecimal(5, accident.getCostPerDamage());
+                preparedStatement.executeUpdate();
+                // add a logger here about success adding
+            } catch (SQLException e) {
+                // add a Logger and a custom Exception
+            } finally {
+                closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
+            }
+        }
+    }
+
+    private void closeConnectionAndStatementAfterInvoke(Connection connection, PreparedStatement preparedStatement) {
+        if (connection != null) {
+            connectionPool.closeConnection(connection, preparedStatement);
+        }
+    }
+
+    private void closeConnectionStatementAndResultSetAfterInvoke(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+        if (connection != null) {
+            connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        }
     }
 }

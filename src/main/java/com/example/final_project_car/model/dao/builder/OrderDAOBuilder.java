@@ -4,7 +4,6 @@ import com.example.final_project_car.model.constants.Parameters;
 import com.example.final_project_car.model.entity.Order;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -13,13 +12,13 @@ public class OrderDAOBuilder {
 
     public Order build(ResultSet resultSet) throws SQLException {
         int orderId = resultSet.getInt(Parameters.ORDER_ID);
-        int userId = resultSet.getInt(Parameters.USER_ID); // should check in work
-        int carId = resultSet.getInt(Parameters.CAR_ID); // should check in work
-        int orderStatusId = resultSet.getInt(Parameters.ORDER_STATUS_ID); // should check in work
+        int userId = resultSet.getInt(Parameters.USER_ID);
+        int carId = resultSet.getInt(Parameters.CAR_ID);
+        int orderStatusId = resultSet.getInt(Parameters.ORDER_STATUS_ID);
         boolean withDriver = resultSet.getBoolean(Parameters.WITH_DRIVER);
         Timestamp createDate = resultSet.getTimestamp(Parameters.CREATE_DATE);
         int rentDuration = resultSet.getInt(Parameters.RENT_DURATION);
-        BigDecimal totalPrice = resultSet.getBigDecimal(Parameters.TOTAL_PRICE); // should calculate this parameter in DB
+        BigDecimal totalPrice = resultSet.getBigDecimal(Parameters.TOTAL_PRICE);
 
         Order order = new Order();
         order.setOrderId(orderId);

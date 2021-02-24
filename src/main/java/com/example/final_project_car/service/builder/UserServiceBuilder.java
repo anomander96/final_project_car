@@ -7,7 +7,6 @@ public class UserServiceBuilder {
     public User build(String firstName, String lastName, String login,
                       String password, String email, String phone, String passport) {
         User user = new User();
-//        user.setUserRoleId(2);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setLogin(login);

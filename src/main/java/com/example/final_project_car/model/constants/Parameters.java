@@ -9,7 +9,7 @@ public class Parameters {
     // Accident entity
     public static final String ACCIDENT_ID = "accident_id";
     public static final String ACCIDENT_CATEGORY_ID = "accident_category_id";
-    public static final String ACCIDENT_DATE = "date";
+    public static final String ACCIDENT_TIME = "accident_time";
     public static final String DESCRIPTION = "description";
     public static final String COST_PER_DAMAGE = "cost_per_damage";
 

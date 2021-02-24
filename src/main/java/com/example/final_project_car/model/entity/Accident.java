@@ -2,8 +2,7 @@ package com.example.final_project_car.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Accident implements Serializable {
@@ -11,16 +10,16 @@ public class Accident implements Serializable {
     private int accidentId;
     private int accidentCategoryId;
     private int orderId;
-    private Date accidentDate;
     private String description;
+    private Timestamp accidentTime;
     private BigDecimal costPerDamage;
 
     public int getAccidentId() {
         return accidentId;
     }
 
-    public void setAccidentId(int id) {
-        this.accidentId = id;
+    public void setAccidentId(int accidentId) {
+        this.accidentId = accidentId;
     }
 
     public int getAccidentCategoryId() {
@@ -35,16 +34,16 @@ public class Accident implements Serializable {
         return orderId;
     }
 
-    public void setOrderId(int ordersId) {
-        this.orderId = ordersId;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public Date getAccidentDate() {
-        return accidentDate;
+    public Timestamp getAccidentTime() {
+        return accidentTime;
     }
 
-    public void setAccidentDate(Date accidentDate) {
-        this.accidentDate = accidentDate;
+    public void setAccidentTime(Timestamp accidentTime) {
+        this.accidentTime = accidentTime;
     }
 
     public String getDescription() {
@@ -63,10 +62,6 @@ public class Accident implements Serializable {
         this.costPerDamage = costPerDamage;
     }
 
-
-    // варто подумати над сутністю accident_category, або додати поле в таблицю accident, або подумати інший спосіб
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,14 +70,14 @@ public class Accident implements Serializable {
         return accidentId == accident.accidentId &&
                 accidentCategoryId == accident.accidentCategoryId &&
                 orderId == accident.orderId &&
-                Objects.equals(accidentDate, accident.accidentDate) &&
                 Objects.equals(description, accident.description) &&
+                Objects.equals(accidentTime, accident.accidentTime) &&
                 Objects.equals(costPerDamage, accident.costPerDamage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accidentId, accidentCategoryId, orderId, accidentDate, description, costPerDamage);
+        return Objects.hash(accidentId, accidentCategoryId, orderId, description, accidentTime, costPerDamage);
     }
 
     @Override
@@ -91,8 +86,8 @@ public class Accident implements Serializable {
                 "accidentId=" + accidentId +
                 ", accidentCategoryId=" + accidentCategoryId +
                 ", orderId=" + orderId +
-                ", accidentDate=" + accidentDate +
                 ", description='" + description + '\'' +
+                ", accidentTime=" + accidentTime +
                 ", costPerDamage=" + costPerDamage +
                 '}';
     }

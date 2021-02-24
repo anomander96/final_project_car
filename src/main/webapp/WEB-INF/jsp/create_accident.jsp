@@ -2,14 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add a car</title>
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <title>Create Accident</title>
     <style>
         body {
             color: #fff;
@@ -92,31 +85,28 @@
     </style>
 </head>
         <body>
-        <%@include file="navbar_admin.jsp"%>
-                <div class="signup-form">
-                    <form action="controller?command=create_car" method="post">
-                        <h3>Car creation</h3>
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="car_category_id" placeholder="Car Category ID (1-5)" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="model_name" placeholder="Model Name" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="color" placeholder="Color" required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="price" placeholder="Price/Day" required="required">
-                        </div>
+               <%@include file="navbar_admin.jsp"%>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg">Add Car</button>
-                        </div>
-                    </form>
-                </div>
+               <div class="signup-form">
+                   <form action="controller?command=create_accident" method="post">
+                       <h3>Accident creation</h3>
+                       <hr>
+                       <div class="form-group">
+                           <input type="text" class="form-control" name="accident_category_id" placeholder="Accident Category ID (1-5)" required="required">
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" name="order_id" placeholder="Order ID" required="required">
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" name="description" placeholder="Add a short description" required="required">
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" name="cost_per_damage" placeholder="Additional fee for a client" required="required">
+                       </div>
+                       <div class="form-group">
+                           <button type="submit" class="btn btn-primary btn-lg">Add Accident</button>
+                       </div>
+                   </form>
+               </div>
         </body>
 </html>

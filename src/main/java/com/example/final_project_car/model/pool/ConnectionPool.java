@@ -18,10 +18,10 @@ public class ConnectionPool {
 
     private final static String DB_PROPERTY = "db";
 
-    private final String driver; // Check without final
-    private final String url; // Check without final
-    private final String user; // Check without final
-    private final String password; // Check without final
+    private final String driver;
+    private final String url;
+    private final String user;
+    private final String password;
     private int poolSize;
 
     public static ConnectionPool getInstance() {
