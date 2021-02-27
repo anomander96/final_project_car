@@ -18,6 +18,9 @@ public class AdministratorFilter implements Filter {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute(AttributeName.USER);
-//        if (user != null && user.getUserRoleId() == 2)
+        if (user != null && user.getUserRoleId() == 2) {
+            session.setAttribute("active_admin", true);
+        }
+        filterChain.doFilter(request, response);
     }
 }

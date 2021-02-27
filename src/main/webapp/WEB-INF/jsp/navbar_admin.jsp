@@ -9,13 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-        // Prevent dropdown menu from closing when click inside the form
-        $(document).on("click", ".navbar-right .dropdown-menu", function(e){
-            e.stopPropagation();
-        });
-    </script>
-
     <style>
         body {
             font-family: 'Varela Round', sans-serif;
@@ -198,6 +191,7 @@
                     <li><a href="controller?command=all_orders">All Orders</a></li>
                     <li><a href="controller?command=all_cars">All Cars</a></li>
                     <li><a href="controller?command=all_accidents">All Accidents</a></li>
+                    <li><a href="controller?command=all_users">All Users</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="controller?command=logout" class="btn btn-primary mt-1 mb-1">Logout</a></li>

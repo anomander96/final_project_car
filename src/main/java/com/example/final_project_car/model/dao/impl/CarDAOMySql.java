@@ -3,6 +3,7 @@ package com.example.final_project_car.model.dao.impl;
 import com.example.final_project_car.model.dao.CarDAO;
 import com.example.final_project_car.model.dao.builder.CarDAOBuilder;
 import com.example.final_project_car.model.entity.Car;
+import com.example.final_project_car.model.exception.ConnectionPoolException;
 import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -55,7 +56,7 @@ public class CarDAOMySql implements CarDAO {
                 Car car = builder.build(resultSet);
                 carContainer.add(car);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't retrieve all cars!", e);
             throw new DAOException(e);
         } finally {
@@ -83,7 +84,7 @@ public class CarDAOMySql implements CarDAO {
                 CarDAOBuilder builder = new CarDAOBuilder();
                 car = builder.build(resultSet);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't find a car with this car id", e);
             throw new DAOException(e);
         } finally {
@@ -107,7 +108,8 @@ public class CarDAOMySql implements CarDAO {
                 preparedStatement.setInt(1, carId);
                 preparedStatement.executeUpdate();
                 result = true;
-            } catch (SQLException e) {
+                LOGGER.info("Car successfully deleted from database");
+            } catch (SQLException | ConnectionPoolException e) {
                 LOGGER.error("Database error! Couldn't delete a car", e);
                 throw new DAOException(e);
             } finally {
@@ -134,7 +136,7 @@ public class CarDAOMySql implements CarDAO {
             preparedStatement.setBigDecimal(5, car.getPrice());
             preparedStatement.setInt(6, car.getCarId());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't update car", e);
             throw new DAOException(e);
 
@@ -160,8 +162,9 @@ public class CarDAOMySql implements CarDAO {
                 preparedStatement.setString(4, car.getColor());
                 preparedStatement.setBigDecimal(5, car.getPrice());
                 preparedStatement.executeUpdate();
+                LOGGER.info("Car successfully added to database");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't add a new car", e);
             throw new DAOException(e);
         } finally {
@@ -191,7 +194,7 @@ public class CarDAOMySql implements CarDAO {
                 Car car = builder.build(resultSet);
                 cars.add(car);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't find all needed cars for pagination", e);
             throw new DAOException(e);
         } finally {
@@ -216,7 +219,7 @@ public class CarDAOMySql implements CarDAO {
                 numberOfRows = resultSet.getInt(1);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't get number of rows in table for pagination", e);
             throw new DAOException(e);
         } finally {

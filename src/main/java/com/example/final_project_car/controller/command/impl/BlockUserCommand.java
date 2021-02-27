@@ -13,44 +13,45 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginCommand extends Command {
-    private static final long serialVersionUID = 7578654847871496658L;
-    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
+public class BlockUserCommand extends Command {
+    private static final long serialVersionUID = 6048292413207608096L;
+    private static final Logger LOGGER = LogManager.getLogger(BlockUserCommand.class);
     private final UserService userService = new UserService();
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String page = PageName.LOGIN_PAGE;
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-
+        String page;
+        HttpSession session = request.getSession();
+        int userId = Integer.parseInt(request.getParameter("user_id"));
         User user = null;
 
         try {
-            user = userService.signIn(login, password);
+            user = userService.getUserById(userId);
         } catch (ServiceException e) {
-            LOGGER.error("Couldn't sign in user");
+            LOGGER.error("Couldn't extract user with such id");
         }
 
-        if (user != null) {
-            HttpSession session = request.getSession();
-            request.setAttribute("user", user);
+
+        if (user != null && !user.getIsBlocked()) {
+
             try {
-                user = userService.getUserByLogin(login);
+                userService.blockUser(userId);
+                LOGGER.info("User with id: {} successfully blocked", userId);
             } catch (ServiceException e) {
-                e.printStackTrace();
+                LOGGER.error("Couldn't block this user");
             }
-            int id = user.getUserId();
-            session.setAttribute("user_id", id);
-            session.setAttribute("user", user);
-            if (user.getUserRoleId() == 1) {
-                page = PageName.MENU_LIST_PAGE;
-            } else {
-                page = PageName.ADMIN_PANEL;
+        } else {
+            try {
+                userService.unblockUser(userId);
+                LOGGER.info("User with id: {} successfully unblocked", userId);
+            } catch (ServiceException e) {
+                LOGGER.error("Couldn't unblock this user");
             }
         }
+
+        page = PageName.ADMIN_PANEL;
+
         return page;
     }
-
 }
-

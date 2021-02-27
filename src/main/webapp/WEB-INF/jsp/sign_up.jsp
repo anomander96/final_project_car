@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/validator.js"></script>
 
     <style>
         body {
@@ -95,21 +96,34 @@
                         <hr>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-xs-6"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
-                                <div class="col-xs-6"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="first_name" class="form-control"
+                                           onchange="validateFirstName()"
+                                           name="first_name" placeholder="First Name" required="required">
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="last_name" class="form-control"
+                                           onchange="validateLastName()"
+                                           name="last_name" placeholder="Last Name" required="required">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="login" placeholder="Login" required="required">
+                            <input type="text" id="login" class="form-control"
+                                   onchange="validateLogin()"
+                                   name="login" placeholder="Login" required="required">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                            <input type="password" id="password" class="form-control" onchange="validatePassword()"
+                                   name="password" placeholder="Password" required="required">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                            <input type="email" id="email" class="form-control"
+                                   name="email" onchange="validateEmail()" placeholder="Email" required="required">
                         </div>
                         <div class="form-group">
-                            <input type="tel" class="form-control" name="phone" placeholder="Phone" required="required">
+                            <input type="tel" id="phone" class="form-control"
+                                   name="phone" onchange="validatePhone()" placeholder="Phone" required="required">
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" name="passport" placeholder="Passport ID" required="required">

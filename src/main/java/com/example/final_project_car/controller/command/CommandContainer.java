@@ -50,6 +50,12 @@ public class CommandContainer {
         commandsContainer.put("delete_accident", new DeleteAccident());
 
 
+        commandsContainer.put("go_to_sign_up", new GoToSignUpPage());
+
+        commandsContainer.put("all_users", new AllUsersCommand());
+        commandsContainer.put("delete_user", new DeleteUserCommand());
+        commandsContainer.put("block_user", new BlockUserCommand());
+
     }
 
     public static Command get(String commandName) {

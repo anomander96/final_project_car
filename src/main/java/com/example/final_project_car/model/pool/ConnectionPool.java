@@ -1,6 +1,9 @@
 package com.example.final_project_car.model.pool;
 
 import com.example.final_project_car.model.constants.Parameters;
+import com.example.final_project_car.model.exception.ConnectionPoolException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.Map;
@@ -11,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public class ConnectionPool {
-
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private final static ConnectionPool instance = new ConnectionPool();
     private static BlockingQueue<Connection> connectionQueue;
     private static BlockingQueue<Connection> givenQueue;
@@ -37,18 +40,22 @@ public class ConnectionPool {
 
         try {
             poolSize = Integer.parseInt(resourceBundle.getString(Parameters.POOL_SIZE));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            LOGGER.warn("Invalid parameter value db.poolsize");
             poolSize = Parameters.DEFAULT_POOL_SIZE;
         }
 
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         givenQueue = new ArrayBlockingQueue<>(poolSize);
 
-        initPool();
+        try {
+            initPool();
+        } catch (ConnectionPoolException e) {
+            LOGGER.error("Couldn't initialize pool in constructor");
+        }
     }
 
-    private void initPool() {
+    private void initPool() throws ConnectionPoolException  {
         try {
             Class.forName(driver);
             for (int i = 0; i < poolSize; i++) {
@@ -57,34 +64,35 @@ public class ConnectionPool {
                 connectionQueue.add(connectionImpl);
             }
         } catch (SQLException e) {
-            System.out.println("Pool init failed");
+            LOGGER.error("Couldn't initialize pool", e);
+            throw new ConnectionPoolException(e);
         }
         catch (ClassNotFoundException e) {
-            System.out.println("Class not found");
+            LOGGER.error("Couldn't find database driver class");
+            throw new ConnectionPoolException(e);
         }
     }
 
-    public Connection getConnection() throws SQLException { // should write a special ConnectionPool exception
-        Connection connection = null; // should check without null
-
+    public Connection getConnection() throws ConnectionPoolException {
+        Connection connection;
         try {
             connection = connectionQueue.take();
             givenQueue.add(connection);
         } catch (InterruptedException e) {
-            System.out.println("Some error");
+            LOGGER.error("Error in getting connection", e);
+            throw new ConnectionPoolException(e);
         }
 
         return connection;
     }
 
     public void closeConnection(Connection connection, Statement statement) {
-        // Should check this with finally block
         try {
             if (connection != null) {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("Attempting to close closed connection", e);
         }
 
         try {
@@ -92,19 +100,17 @@ public class ConnectionPool {
                 statement.close();
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("An error occurred while trying to close a statement");
         }
     }
 
     public void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
-
-        // Should check this with finally block
         try {
             if (resultSet != null) {
                 resultSet.close();
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+           LOGGER.error("Attempting to close closed connection");
         }
 
         try {
@@ -112,7 +118,7 @@ public class ConnectionPool {
                 statement.close();
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("An error occurred while trying to close a Statement");
         }
 
         try {
@@ -120,7 +126,7 @@ public class ConnectionPool {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+            LOGGER.error("An error occurred while trying to close a Result Set");
         }
     }
 
@@ -129,14 +135,14 @@ public class ConnectionPool {
             try {
                 ((ConnectionImpl) connectionQueue.take()).trueClose();
             } catch (SQLException e) {
-                System.out.println("Should add a Logger");
+                LOGGER.error("Couldn't close a connection");
             } catch (InterruptedException e) {
-                System.out.println("Should add a Logger");
+                LOGGER.error("Couldn't get a connection");
             }
         }
     }
 
-    public void rebootConnectionPool() {
+    public void rebootConnectionPool() throws ConnectionPoolException {
         dropConnections();
         initPool();
     }

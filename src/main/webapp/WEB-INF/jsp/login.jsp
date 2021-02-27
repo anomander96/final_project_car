@@ -46,7 +46,7 @@
                     <button type="submit" class="btn btn-primary btn-block">Log in</button>
                 </div>
             </form>
-            <p class="text-center"><a href="controller?command=registration">Create an Account</a></p>
+            <p class="text-center"><a href="controller?command=go_to_sign_up">Create an Account</a></p>
         </div>
     </body>
 </html>

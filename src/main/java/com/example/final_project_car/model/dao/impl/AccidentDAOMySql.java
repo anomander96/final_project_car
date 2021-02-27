@@ -3,7 +3,11 @@ package com.example.final_project_car.model.dao.impl;
 import com.example.final_project_car.model.dao.AccidentDAO;
 import com.example.final_project_car.model.dao.builder.AccidentDAOBuilder;
 import com.example.final_project_car.model.entity.Accident;
+import com.example.final_project_car.model.exception.ConnectionPoolException;
+import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.pool.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,6 +17,7 @@ import java.util.List;
 public class AccidentDAOMySql implements AccidentDAO {
     private static AccidentDAOMySql instance;
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final Logger LOGGER = LogManager.getLogger(AccidentDAOMySql.class);
 
     private static final String SELECT_ALL_ACCIDENTS = "SELECT * FROM accident";
     private static final String SELECT_ACCIDENT_BY_ID = "SELECT * FROM accident WHERE accident_id = ?";
@@ -28,7 +33,7 @@ public class AccidentDAOMySql implements AccidentDAO {
     }
 
     @Override
-    public List<Accident> getAllAccidents() {
+    public List<Accident> getAllAccidents() throws DAOException {
         List<Accident> accidentsContainer = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -44,8 +49,9 @@ public class AccidentDAOMySql implements AccidentDAO {
                 Accident accident = builder.build(resultSet);
                 accidentsContainer.add(accident);
             }
-        } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error("Database error! Couldn't get all accidents", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
@@ -53,7 +59,7 @@ public class AccidentDAOMySql implements AccidentDAO {
     }
 
     @Override
-    public Accident getAccidentById(int accidentId) {
+    public Accident getAccidentById(int accidentId) throws DAOException {
         Accident accident = new Accident();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -69,8 +75,9 @@ public class AccidentDAOMySql implements AccidentDAO {
                 AccidentDAOBuilder builder = new AccidentDAOBuilder();
                 accident = builder.build(resultSet);
             }
-        } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error("Database error! Couldn't find accident with this id", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
         }
@@ -78,7 +85,7 @@ public class AccidentDAOMySql implements AccidentDAO {
     }
 
     @Override
-    public boolean delete(Integer accidentId) {
+    public boolean delete(Integer accidentId) throws DAOException {
         boolean result = false;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -90,9 +97,11 @@ public class AccidentDAOMySql implements AccidentDAO {
                 preparedStatement.setInt(1, accidentId);
                 preparedStatement.executeUpdate();
                 result = true;
+                LOGGER.info("Accident successfully deleted to database");
             }
-        } catch (SQLException e) {
-            System.out.println("Should add a Logger");
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error("Database error! Couldn't delete accident with such accident id", e);
+            throw new DAOException(e);
         } finally {
             closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
         }
@@ -100,7 +109,7 @@ public class AccidentDAOMySql implements AccidentDAO {
     }
 
     @Override
-    public void add(Accident accident) {
+    public void add(Accident accident) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         if (accident != null) {
@@ -113,9 +122,10 @@ public class AccidentDAOMySql implements AccidentDAO {
                 preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
                 preparedStatement.setBigDecimal(5, accident.getCostPerDamage());
                 preparedStatement.executeUpdate();
-                // add a logger here about success adding
-            } catch (SQLException e) {
-                // add a Logger and a custom Exception
+                LOGGER.info("Accident successfully added to database");
+            } catch (SQLException | ConnectionPoolException e) {
+                LOGGER.error("Database error! Couldn't add an accident", e);
+                throw new DAOException(e);
             } finally {
                 closeConnectionAndStatementAfterInvoke(connection, preparedStatement);
             }

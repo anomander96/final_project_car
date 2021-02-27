@@ -3,83 +3,74 @@ package com.example.final_project_car.service;
 import com.example.final_project_car.model.dao.CarDAO;
 import com.example.final_project_car.model.dao.impl.CarDAOMySql;
 import com.example.final_project_car.model.entity.Car;
+import com.example.final_project_car.model.exception.DAOException;
+import com.example.final_project_car.model.exception.ServiceException;
 import com.example.final_project_car.service.builder.CarServiceBuilder;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarService {
     private final CarDAO carDao = CarDAOMySql.getInstance();
 
-    //0.+++ public List<Car> getAllCars(); --> invoke from DAO
-    //1.+++ public Car getCarById(); --> invoke from DAO
-    //2.+++ public boolean deleteCar(); --> invoke from DAO
-    //3. public void addCar(); --> invoke from DAO
-
-    public List<Car> getAllCars() throws Exception { // add an own signature
-        //List<Car> carsContainer
+    public List<Car> getAllCars() throws ServiceException {
         try {
             return carDao.getAllCars();
-        } catch (Exception e) {
-            // add a Logger and a custom Exception
-            throw new Exception(e);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public Car getCarById(int carId) {
+    public Car getCarById(int carId) throws ServiceException {
         Car car = null;
         try {
             car = carDao.getCarById(carId);
-        } catch (Exception e) {
-            // add a Logger and a custom exception
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         } return car;
     }
 
-    public boolean deleteCar(int carId) {
+    public void deleteCar(int carId) throws ServiceException {
         try {
             carDao.delete(carId);
-            return true;
-        } catch (Exception e) {
-            // add a logger and a custom exception
-        } return false;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     public void createCar(String carCategoryId, String brandName, String modelName,
-                          String color, double price) {
+                          String color, double price) throws ServiceException {
         try {
             CarServiceBuilder builder = new CarServiceBuilder();
             Car newCar = builder.build(carCategoryId, brandName, modelName, color, price);
             carDao.addNewCar(newCar);
-        } catch (Exception e) {
-            // add a Logger here and a custom exception
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
-    // should fix this, doesn't work correctly
-    public void updateCar(Car car) {
+    public void updateCar(Car car) throws ServiceException {
         try {
             carDao.update(car);
-        } catch (Exception e) {
-            // add a Logger and a custom exception
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public List<Car> findCarsForPagination(int currentPage, int numberOfRecords) {
+    public List<Car> findCarsForPagination(int currentPage, int numberOfRecords) throws ServiceException {
         List<Car> cars = null;
         try {
             cars = carDao.findCars(currentPage, numberOfRecords);
-        } catch (Exception e) {
-            // add a Logger and a custom exception
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         } return cars;
     }
 
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws ServiceException {
         Integer numberOfRows = 0;
         try {
             numberOfRows = carDao.getNumberOfRows();
-        } catch (Exception e) {
-            // add a Logger and a custom Exception
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         } return numberOfRows;
     }
 }

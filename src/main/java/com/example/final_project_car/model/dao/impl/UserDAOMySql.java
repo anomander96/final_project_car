@@ -3,6 +3,7 @@ package com.example.final_project_car.model.dao.impl;
 import com.example.final_project_car.model.dao.UserDAO;
 import com.example.final_project_car.model.dao.builder.UserDAOBuilder;
 import com.example.final_project_car.model.entity.User;
+import com.example.final_project_car.model.exception.ConnectionPoolException;
 import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +19,7 @@ import java.util.List;
 public class UserDAOMySql implements UserDAO {
     private static UserDAOMySql instance;
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private static final Logger LOGGER = LogManager.getLogger(UserDAOMySql.class);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String SELECT_ALL_USERS = "SELECT * FROM user";
     private static final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE user_id = ?";
@@ -55,7 +56,7 @@ public class UserDAOMySql implements UserDAO {
                 User user = builder.build(resultSet);
                 usersContainer.add(user);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't get all users", e);
             throw new DAOException(e);
         } finally {
@@ -83,7 +84,7 @@ public class UserDAOMySql implements UserDAO {
                 UserDAOBuilder builder = new UserDAOBuilder();
                 user = builder.build(resultSet);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't find user with such user id", e);
             throw new DAOException(e);
         } finally {
@@ -110,7 +111,7 @@ public class UserDAOMySql implements UserDAO {
                 UserDAOBuilder builder = new UserDAOBuilder();
                 user = builder.build(resultSet);
             }
-        } catch(SQLException e) {
+        } catch(SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't find user with such login", e);
             throw new DAOException(e);
         } finally {
@@ -138,7 +139,8 @@ public class UserDAOMySql implements UserDAO {
             preparedStatement.setString(7, newUser.getPassport());
             preparedStatement.setBoolean(8, newUser.getIsBlocked());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+            LOGGER.info("User: {} successfully added to database", newUser.getLogin());
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't register user", e);
             throw new DAOException(e);
         } finally {
@@ -166,8 +168,9 @@ public class UserDAOMySql implements UserDAO {
                 preparedStatement.setString(8, user.getPassport());
                 preparedStatement.setBoolean(9, false);
                 preparedStatement.executeUpdate();
+                LOGGER.info("User: {} successfully added to database", user.getLogin());
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't add a new user", e);
             throw new DAOException(e);
         } finally {
@@ -187,7 +190,8 @@ public class UserDAOMySql implements UserDAO {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(BLOCK_USER + userId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+            LOGGER.info("User with id: {} successfully blocked", userId);
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't block user", e);
             throw new DAOException(e);
         } finally {
@@ -206,8 +210,10 @@ public class UserDAOMySql implements UserDAO {
             connection = connectionPool.getConnection();
             preparedStatement = connection.prepareStatement(UNBLOCK_USER + userId);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            // add a Logger and custom Exception
+            LOGGER.info("User with id: {} successfully unblocked to database", userId);
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error("Database error! Couldn't unblock user", e);
+            throw new DAOException(e);
         }
     }
 
@@ -225,8 +231,9 @@ public class UserDAOMySql implements UserDAO {
                 preparedStatement.setInt(1, userId);
                 preparedStatement.executeUpdate();
                 result = true;
+                LOGGER.info("User with id: {} successfully deleted from database", userId);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             LOGGER.error("Database error! Couldn't delete user", e);
             throw new DAOException(e);
         } finally {
