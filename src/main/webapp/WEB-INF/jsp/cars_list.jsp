@@ -73,13 +73,7 @@
                             </div>
                         </td>
                             <td>
-                                <select class="form-control" id="exampleFormControlSelect1" name="rentDuration">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                                <input type="number" name="rentDuration">
                             </td>
                         <td>
                                 <input type="hidden" id="carId" name="carId" value="${car.carId}">

@@ -19,20 +19,43 @@
                     <p class="lead">Welcome to admin panel</p>
                     </center>
                     <hr class="my-4">
-                    <p>Choose option:</p>
+<%--                    <p>Choose option:</p>--%>
 
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_admin" role="button">Add admin</a>
-                    </p>
+<%--                    <p class="lead">--%>
+<%--                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_admin" role="button">Add admin</a>--%>
+<%--                    </p>--%>
 
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_car" role="button">Add Car</a>
-                    </p>
+<%--                    <p class="lead">--%>
+<%--                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_car" role="button">Add Car</a>--%>
+<%--                    </p>--%>
 
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_accident" role="button">Add accident</a>
-                    </p>
+<%--                    <p class="lead">--%>
+<%--                        <a class="btn btn-primary btn-lg" href="controller?command=go_to_create_accident" role="button">Add accident</a>--%>
+<%--                    </p>--%>
                 </div>
+
+        <div class="row text-center">
+
+            <div class="col-md-4">
+                <a href="controller?command=go_to_create_admin" class="d-block mb-4 h-100">
+                    <p>Create Admin</p>
+                    <img class="img-fluid img-thumbnail" src="img/create_admin.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="controller?command=go_to_create_car" class="d-block mb-4 h-100">
+                    <p>Create Car</p>
+                    <img class="img-fluid img-thumbnail" src="img/create_car.png" alt="">
+
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="controller?command=go_to_create_accident" class="d-block mb-4 h-100">
+                    <p>Create Accident</p>
+                    <img class="img-fluid img-thumbnail" src="img/create_accident.png" alt="">
+                </a>
+            </div>
+        </div>
 
 
         </body>

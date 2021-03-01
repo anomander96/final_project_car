@@ -12,9 +12,12 @@ public interface AccidentDAO {
 
     public Accident getAccidentById(int accidentId) throws DAOException;
 
+    public List<Accident> getAccidentsByOrderId(int orderId) throws DAOException;
+
     public boolean delete(Integer accidentId) throws DAOException;
 
     public void add(Accident accident) throws DAOException;
+
 
 
 

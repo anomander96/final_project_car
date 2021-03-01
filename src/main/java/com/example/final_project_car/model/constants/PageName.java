@@ -23,4 +23,5 @@ public class PageName {
     public static final String UPDATE_CAR = "WEB-INF/jsp/update_car.jsp";
     public static final String ERROR_PAGE = "WEB-INF/jsp/error_page.jsp";
     public static final String ALL_USERS = "WEB-INF/jsp/all_users.jsp";
+    public static final String USER_ACCIDENTS_BY_ORDER_ID = "WEB-INF/jsp/user_accidents.jsp";
 }

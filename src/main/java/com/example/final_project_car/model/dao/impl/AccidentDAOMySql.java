@@ -24,6 +24,7 @@ public class AccidentDAOMySql implements AccidentDAO {
     private static final String DELETE_QUERY = "DELETE FROM accident WHERE accident_id = ?";
     private static final String ADD_ACCIDENT = "INSERT INTO accident (accident_category_id, order_id, description, accident_time, cost_per_damage) " +
             "VALUES (?, ?, ?, ?, ?);";
+    private static final String SELECT_ACCIDENTS_BY_ORDER_ID = "SELECT * FROM accident WHERE order_id = ?";
 
     public static AccidentDAOMySql getInstance() {
         if (instance == null) {
@@ -85,6 +86,31 @@ public class AccidentDAOMySql implements AccidentDAO {
     }
 
     @Override
+    public List<Accident> getAccidentsByOrderId(int orderId) throws DAOException {
+        List<Accident> accidentsContainer = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = connectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_ACCIDENTS_BY_ORDER_ID);
+            preparedStatement.setInt(1, orderId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                AccidentDAOBuilder builder = new AccidentDAOBuilder();
+                Accident accident = builder.build(resultSet);
+                accidentsContainer.add(accident);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnectionStatementAndResultSetAfterInvoke(connection, preparedStatement, resultSet);
+        } return accidentsContainer;
+    }
+
+    @Override
     public boolean delete(Integer accidentId) throws DAOException {
         boolean result = false;
         Connection connection = null;
@@ -141,6 +167,15 @@ public class AccidentDAOMySql implements AccidentDAO {
     private void closeConnectionStatementAndResultSetAfterInvoke(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
         if (connection != null) {
             connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        }
+    }
+
+    public static void main(String[] args) {
+        AccidentDAOMySql accidentDAOMySql = new AccidentDAOMySql();
+        try {
+            System.out.println(accidentDAOMySql.getAccidentsByOrderId(2));
+        } catch (DAOException e) {
+            e.printStackTrace();
         }
     }
 }

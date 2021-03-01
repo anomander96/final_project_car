@@ -56,6 +56,8 @@ public class CommandContainer {
         commandsContainer.put("delete_user", new DeleteUserCommand());
         commandsContainer.put("block_user", new BlockUserCommand());
 
+        commandsContainer.put("show_accident", new ShowAccidentCommand());
+
     }
 
     public static Command get(String commandName) {

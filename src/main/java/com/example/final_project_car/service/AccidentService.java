@@ -7,6 +7,7 @@ import com.example.final_project_car.model.exception.DAOException;
 import com.example.final_project_car.model.exception.ServiceException;
 import com.example.final_project_car.service.builder.AccidentServiceBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccidentService {
@@ -29,6 +30,15 @@ public class AccidentService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         } return accident;
+    }
+
+    public List<Accident> getUserAccidentsByOrder(int orderId) throws ServiceException {
+        List<Accident> accidents = new ArrayList<>();
+        try {
+            accidents = accidentDAO.getAccidentsByOrderId(orderId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        } return accidents;
     }
 
     public void deleteAccident(int accidentId) throws ServiceException {

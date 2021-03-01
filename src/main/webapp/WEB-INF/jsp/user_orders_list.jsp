@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script>
-        // Prevent dropdown menu from closing when click inside the form
-        $(document).on("click", ".navbar-right .dropdown-menu", function(e){
-            e.stopPropagation();
-        });
-    </script>
 </head>
     <body>
     <%@include file="navbar_client.jsp"%>
@@ -33,6 +26,7 @@
            <th>Rent Duration</th>
            <th>Total Price</th>
                <th>Pay Your Order</th>
+               <th>Accidents</th>
            </tr>
            </thead>
             <c:forEach items="${orders}" var="order">
@@ -85,6 +79,13 @@
                         <form action="controller?command=change_order_status_on_paid" method="post">
                             <input type="hidden" name="orderId" value="${order.orderId}">
                             <input type="submit" name="pay" value="Pay">
+                        </form>
+                    </td>
+
+                    <td>
+                        <form action="controller?command=show_accident" method="post">
+                            <input type="hidden" name="orderId" value="${order.orderId}">
+                            <input type="submit" name="show_accidents" value="Show">
                         </form>
                     </td>
                 </tr>
