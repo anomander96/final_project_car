@@ -13,8 +13,7 @@ public class GoToCreateCarPage extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String page;
         HttpSession session = request.getSession();
-        return page = PageName.CREATE_CAR;
+        return PageName.CREATE_CAR;
     }
 }

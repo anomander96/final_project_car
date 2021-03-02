@@ -17,7 +17,7 @@ import java.util.List;
 public class AllUsersCommand extends Command {
     private static final long serialVersionUID = 4772155496534923190L;
     private static final Logger LOGGER = LogManager.getLogger(AllUsersCommand.class);
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

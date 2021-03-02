@@ -17,20 +17,9 @@ public class GoToUpdateCarPage extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String page;
         HttpSession session = request.getSession();
-//        int carId = Integer.parseInt(request.getParameter("car_id"));
         String carId = request.getParameter("car_id");
         session.setAttribute("car_id", carId);
-//        try {
-//            request.getRequestDispatcher("controller?command=go_to_update_car").include(request, response);
-//        } catch (ServletException e) {
-//            e.printStackTrace();
-//        }
-//        RequestDispatcher dispatch = request.getRequestDispatcher(PageName.UPDATE_CAR);
-//        try {
-//            dispatch.forward(request, response);
-//        } catch (ServletException e) {
-//            e.printStackTrace();
-//        }
+
         page = PageName.UPDATE_CAR;
         return page;
     }

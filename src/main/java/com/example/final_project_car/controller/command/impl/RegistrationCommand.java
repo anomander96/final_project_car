@@ -20,7 +20,7 @@ import java.util.Map;
 public class RegistrationCommand extends Command {
     private static final long serialVersionUID = 8458030426649305346L;
     private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

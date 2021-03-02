@@ -9,6 +9,4 @@ public class AttributeName {
     public static final String CAR = "car";
     public static final String CAR_ID = "car_id";
 
-
-    // here will be an error attributes
 }

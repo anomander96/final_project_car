@@ -4,8 +4,11 @@ import com.example.final_project_car.controller.command.Command;
 import com.example.final_project_car.model.constants.PageName;
 import com.example.final_project_car.model.entity.Car;
 import com.example.final_project_car.model.entity.User;
+import com.example.final_project_car.model.exception.ServiceException;
 import com.example.final_project_car.service.CarService;
 import com.example.final_project_car.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +17,7 @@ import java.io.IOException;
 
 public class GoToOrderPage extends Command {
     private static final long serialVersionUID = 1450934834026967708L;
+    private static final Logger LOGGER = LogManager.getLogger(GoToOrderPage.class);
     private final UserService userService = new UserService();
     private final CarService carService = new CarService();
 
@@ -25,20 +29,20 @@ public class GoToOrderPage extends Command {
         int userId = (int) session.getAttribute("user_id");
         int carId = Integer.parseInt(request.getParameter("carId"));
 
-        Car car = null;
-        User user = null;
+        Car car;
+        User user;
 
         try {
             user = userService.getUserById(userId);
             request.setAttribute("user", user);
-        } catch (Exception e) {
-            // add a Logger and a custom Exception + message-info page
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't find user with id: {}", userId);
         }
         try {
             car = carService.getCarById(carId);
             request.setAttribute("car", car);
-        } catch (Exception e) {
-            // add a Logger and a custom Exception + error or a message-info page
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't find car with car with id: {}", carId);
         }
 
         return page = PageName.CREATE_ORDER;

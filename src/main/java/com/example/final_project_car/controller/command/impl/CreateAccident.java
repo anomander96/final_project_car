@@ -2,8 +2,10 @@ package com.example.final_project_car.controller.command.impl;
 
 import com.example.final_project_car.controller.command.Command;
 import com.example.final_project_car.model.constants.PageName;
-import com.example.final_project_car.model.entity.Accident;
+import com.example.final_project_car.model.exception.ServiceException;
 import com.example.final_project_car.service.AccidentService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 public class CreateAccident extends Command {
     private static final long serialVersionUID = 840401384508117267L;
+    private static final Logger LOGGER = LogManager.getLogger(CreateAccident.class);
     private final AccidentService accidentService = new AccidentService();
 
     @Override
@@ -26,8 +29,9 @@ public class CreateAccident extends Command {
 
         try {
             accidentService.createAccidentByAdmin(accidentCategoryId, orderId, description, costPerDamage);
-        } catch (Exception e) {
-            // add a logger and a custom Exception and error page;
+            LOGGER.info("Accident successfully created");
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't create accident");
         }
         page = PageName.ADMIN_PANEL;
         return page;

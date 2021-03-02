@@ -21,7 +21,7 @@ public class ShowAccidentCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String page = null;
+        String page;
         HttpSession session = request.getSession();
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         List<Accident> accidents = null;

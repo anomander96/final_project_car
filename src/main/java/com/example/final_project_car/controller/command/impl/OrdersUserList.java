@@ -3,7 +3,10 @@ package com.example.final_project_car.controller.command.impl;
 import com.example.final_project_car.controller.command.Command;
 import com.example.final_project_car.model.constants.PageName;
 import com.example.final_project_car.model.entity.Order;
+import com.example.final_project_car.model.exception.ServiceException;
 import com.example.final_project_car.service.OrderService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,7 @@ import java.util.List;
 
 public class OrdersUserList extends Command {
     private static final long serialVersionUID = 1729304145778520834L;
+    private static final Logger LOGGER = LogManager.getLogger(OrdersUserList.class);
     private final OrderService orderService = new OrderService();
 
     @Override
@@ -26,28 +30,20 @@ public class OrdersUserList extends Command {
 
         int carId = Integer.parseInt(request.getParameter("carId"));
         int rentHours = Integer.parseInt(request.getParameter("rentHours"));
-//        String time = request.getParameter("rentDuration");
-//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//        long ms = 0;
-//        try {
-//            ms = formatter.parse(time).getTime();
-//        } catch (Exception e) {
-//            // add a Logger and a custom exception
-//        }
-//        Time rentDuration = new Time(ms);
         boolean withDriver = false;
         try {
             orderService.createOrderByUser(userId, carId, withDriver, rentHours);
-        } catch (Exception e) {
-            // add a Logger and a custom Exception
+            LOGGER.info("New Order successfully created");
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't create a new Order");
         }
 
         List<Order> orders = null;
 
         try {
             orders = orderService.getOrdersByUserId(userId);
-        } catch (Exception e) {
-            // add a Logger and a custom Exception
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't find Order with user id: {}", userId);
         }
 
         request.setAttribute("orders", orders);
